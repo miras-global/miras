@@ -194,7 +194,7 @@ miras/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/esokullu/miras.git
+   git clone https://github.com/miras-global/miras.git
    cd miras
    ```
 
