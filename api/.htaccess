@@ -1,0 +1,7 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Allow only index.php to be directly accessed
+<FilesMatch "^(?!index\.php$).*">
+    Require all denied
+</FilesMatch>
