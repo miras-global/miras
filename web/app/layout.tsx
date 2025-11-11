@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "Miras",
     images: [
       {
-        url: "/reaper.png",
+        url: "/reaper.jpg",
         width: 1200,
         height: 630,
         alt: "Miras — Trustless Crypto Inheritance",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Miras — Trustless Crypto Inheritance",
     description: "Non-custodial, on-chain estate planning using Safe multisig and verifiers.",
-    images: ["/reaper.png"],
+    images: ["/reaper.jpg"],
   },
 };
 
