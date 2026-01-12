@@ -54,7 +54,7 @@ export default function GetStartedPage() {
                     <div className="step-badge mb-3">3</div>
                     <h5 className="card-title">Your Policy</h5>
                     <p className="text-muted mb-0">
-                      Choose quorum (e.g., 2-of-3), waiting period, and documents required.
+                      Choose dead man's switch, quorum (e.g., 2-of-3), waiting period, and documents required.
                     </p>
                   </div>
                 </div>
@@ -63,6 +63,7 @@ export default function GetStartedPage() {
           </section>
 
           {/* Packages explainer */}
+          
           <section className="mb-5">
             <div className="card border-0 p-4 p-md-5">
               <div className="card-body">
@@ -81,10 +82,141 @@ export default function GetStartedPage() {
               </div>
             </div>
           </section>
+          
 
-          {/* Setup Steps */}
+ 
+
+          {/* Choose Your Model */}
+          <section className="mb-5">
+            <h2 className="fw-bold section-title mb-4">Choose Your Inheritance Model</h2>
+            <p className="text-muted mb-4">
+              Miras offers two different approaches to crypto inheritance. Choose the one that best fits your needs.
+            </p>
+            <div className="row g-4">
+              <div className="col-lg-6">
+                <div className="card h-100 border-primary">
+                  <div className="card-header bg-primary text-white">
+                    <h5 className="mb-0"><i className="bi bi-people me-2"></i>Attester Model</h5>
+                  </div>
+                  <div className="card-body">
+                    <p className="text-muted mb-3">
+                      A decentralized verification system where staked attesters verify inheritance claims. This model provides strong security through multi-party verification and configurable waiting periods.
+                    </p>
+                    <h6 className="fw-bold">Best for:</h6>
+                    <ul className="text-muted mb-3">
+                      <li>Large estates requiring maximum security</li>
+                      <li>Users who want third-party verification of death</li>
+                      <li>Complex inheritance scenarios with multiple heirs</li>
+                    </ul>
+                    <h6 className="fw-bold">How it works:</h6>
+                    <ul className="text-muted mb-3">
+                      <li>Create a 2-of-3 multisig Safe wallet</li>
+                      <li>Attesters verify claims and contact you before releasing funds</li>
+                      <li>Configurable waiting period (default 90 days)</li>
+                      <li>You can cancel claims if you&apos;re still alive</li>
+                    </ul>
+                    <div className="d-grid gap-2">
+                      <Link href="/launch" className="btn btn-primary btn-lg">
+                        <i className="bi bi-plug me-2"></i>Launch with Attesters
+                      </Link>
+                      <Link href="/launch-manual" className="btn btn-outline-primary btn-sm">
+                        Manual Setup (existing Safe)
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="card h-100 border-success">
+                  <div className="card-header bg-success text-white">
+                    <h5 className="mb-0"><i className="bi bi-clock-history me-2"></i>Dead Man&apos;s Switch</h5>
+                  </div>
+                  <div className="card-body">
+                    <p className="text-muted mb-3">
+                      A simple time-based inheritance contract. If you don&apos;t interact with the contract for 1 year, your heir can automatically withdraw all funds. No attesters or third parties involved.
+                    </p>
+                    <h6 className="fw-bold">Best for:</h6>
+                    <ul className="text-muted mb-3">
+                      <li>Simple, single-heir inheritance</li>
+                      <li>Users who prefer fully automated solutions</li>
+                      <li>Smaller amounts or backup inheritance plans</li>
+                    </ul>
+                    <h6 className="fw-bold">How it works:</h6>
+                    <ul className="text-muted mb-3">
+                      <li>Deploy a simple smart contract with your heir&apos;s address</li>
+                      <li>Send ETH to the contract to fund it</li>
+                      <li>Any transfer resets the 1-year timer</li>
+                      <li>After 1 year of inactivity, heir can withdraw everything</li>
+                    </ul>
+                    <div className="d-grid">
+                      <Link href="/switch" className="btn btn-success btn-lg">
+                        <i className="bi bi-clock-history me-2"></i>Launch Dead Man&apos;s Switch
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Comparison Table */}
+          <section className="mb-5">
+            <h2 className="fw-bold section-title mb-4">Model Comparison</h2>
+            <div className="table-responsive">
+              <table className="table table-bordered">
+                <thead className="table-light">
+                  <tr>
+                    <th>Feature</th>
+                    <th>Attester Model</th>
+                    <th>Dead Man&apos;s Switch</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Verification</strong></td>
+                    <td>Third-party attesters verify death</td>
+                    <td>Automatic after 1 year of inactivity</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Security Level</strong></td>
+                    <td>High (multi-party verification)</td>
+                    <td>Medium (time-based only)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Complexity</strong></td>
+                    <td>More complex setup</td>
+                    <td>Simple, single contract</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cost</strong></td>
+                    <td>Higher (Safe creation + attester fees)</td>
+                    <td>Lower (single contract deployment)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cancellation</strong></td>
+                    <td>Can cancel claims anytime</td>
+                    <td>Reset timer by sending any transfer</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Multiple Heirs</strong></td>
+                    <td>Supported (multiple Safes)</td>
+                    <td>One heir per contract</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Waiting Period</strong></td>
+                    <td>Configurable (default 90 days)</td>
+                    <td>Fixed at 1 year</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+
+         {/* Setup Steps */}
+          
           <section id="setup" className="mb-5">
-            <h2 className="fw-bold section-title mb-4">Set Up in 5 Steps</h2>
+            <h2 className="fw-bold section-title mb-4">Attester Model in 4 Steps</h2>
             <div className="row g-4">
               <div className="col-lg-6">
                 <div className="card h-100">
@@ -133,24 +265,9 @@ export default function GetStartedPage() {
               
             </div>
           </section>
+          
 
-          {/* CTA */}
-          <section className="text-center">
-            <div className="card border-0 p-4 p-md-5">
-              <div className="card-body">
-                <h3 className="fw-bold mb-2">Ready to Begin?</h3>
-                <p className="text-muted mb-4">
-                  Follow the steps above to configure your trustless inheritance policy.
-                </p>  
-                <Link href="/launch" className="btn btn-success btn-lg px-4">
-                  <i className="bi bi-plug"></i> Launch Setup
-                </Link>
-                <br />
-                <br />
-                <p><Link href="/launch-manual" className="btn btn-outline-success btn-sm px-4">If your key is already configured (e.g., in Safe or a multisig setup), you can add a new signatory to the protocol — only select this if you’re confident in what you’re doing.</Link></p>
-              </div>
-            </div>
-          </section>
+
         </div>
       </main>
     </>
