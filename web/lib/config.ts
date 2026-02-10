@@ -3,7 +3,9 @@
  * Reads from environment variables with fallback to hardcoded values
  */
 
-const IS_MAINNET = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
+//const IS_MAINNET = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
+export const TESTNET_ONLY = true;
+const IS_MAINNET = !TESTNET_ONLY && process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
 
 export type NetworkConfig = {
   id: number;
