@@ -22,6 +22,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { mainnet, sepolia } from 'wagmi/chains';
 import { createConfig, http, cookieStorage, createStorage } from 'wagmi';
+import { TESTNET_ONLY } from '@/lib/config';
 
 const connectors = connectorsForWallets(
   [
@@ -61,13 +62,20 @@ const connectors = connectorsForWallets(
   }
 );
 
-export const wagmiConfig = createConfig({
-  connectors,
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-  ssr: true,
-  storage: createStorage({ storage: cookieStorage }),
-});
+// TESTNET_ONLY: When true, only Sepolia is offered to wallets.
+// Set TESTNET_ONLY to false in config.ts to restore mainnet.
+export const wagmiConfig = TESTNET_ONLY
+  ? createConfig({
+      connectors,
+      chains: [sepolia],
+      transports: { [sepolia.id]: http() },
+      ssr: true,
+      storage: createStorage({ storage: cookieStorage }),
+    })
+  : createConfig({
+      connectors,
+      chains: [mainnet, sepolia],
+      transports: { [mainnet.id]: http(), [sepolia.id]: http() },
+      ssr: true,
+      storage: createStorage({ storage: cookieStorage }),
+    });
