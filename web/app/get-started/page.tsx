@@ -54,7 +54,7 @@ export default function GetStartedPage() {
                     <div className="step-badge mb-3">3</div>
                     <h5 className="card-title">Your Policy</h5>
                     <p className="text-muted mb-0">
-                      Choose dead man's switch, quorum (e.g., 2-of-3), waiting period, and documents required.
+                      Choose dead man&apos;s switch, quorum (e.g., 2-of-3), waiting period, and documents required.
                     </p>
                   </div>
                 </div>
