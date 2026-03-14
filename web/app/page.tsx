@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
+import { TESTNET_ONLY } from "@/lib/config";
 
 export const dynamic = "force-static";
 
@@ -36,7 +37,7 @@ export default function HomePage(){
             {/* Left copy */}
             <div className="col-12 col-lg-6 order-2 order-lg-1">
               <div className="mb-4 d-flex gap-2 flex-wrap">
-                 <span className="badge-chip" style={{background:'rgba(255,193,7,.15)',color:'#ffc107',border:'1px solid rgba(255,193,7,.3)'}}>Testnet Only (Sepolia)</span>
+                {TESTNET_ONLY && <span className="badge-chip" style={{background:'rgba(255,193,7,.15)',color:'#ffc107',border:'1px solid rgba(255,193,7,.3)'}}>Testnet Only (Sepolia)</span>}
                 <span className="badge-chip">Trustless • Non‑custodial</span>
                 {/*
                 <span className="badge-chip">Safe Multisig • On‑chain</span>
@@ -75,8 +76,7 @@ export default function HomePage(){
           <div className="mt-5 footer-line"></div>
           <div className="py-3 small text-white-50 d-flex flex-wrap gap-3">
             <span>© {year} miras.global </span>
-             {/* TESTNET_ONLY: "Security‑audited" removed; restore when re‑enabling mainnet */}
-            <span className="ms-auto">Non‑custodial • Self‑sovereign</span>
+             <span className="ms-auto">{TESTNET_ONLY ? 'Non‑custodial • Self‑sovereign' : 'Security‑audited • Non‑custodial • Self‑sovereign'}</span>
           </div>
         </div>
       </section>
