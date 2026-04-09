@@ -11,11 +11,12 @@ export default function LayoutChrome({ children }: PropsWithChildren) {
   if (pathname === "/") {
     return <>{children}</>;
   }
+  const isFullBleedPage = pathname.startsWith("/exchange");
   // Default: show header/footer
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className={isFullBleedPage ? "" : "inner-page-shell"}>{children}</main>
       <Footer />
     </>
   );

@@ -19,6 +19,22 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.inner-page-shell{
+  position: relative;
+  isolation: isolate;
+  padding-bottom: 2rem;
+}
+.inner-page-shell::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height: 360px;
+  z-index: -1;
+  background:
+    radial-gradient(900px 280px at 5% 0%, rgba(13,110,253,.12), rgba(13,110,253,0) 62%),
+    radial-gradient(900px 260px at 95% 5%, rgba(111,66,193,.11), rgba(111,66,193,0) 62%);
+  pointer-events:none;
+}
 
 /* Typography */
 h1, .h1 { letter-spacing: .2px }
@@ -37,8 +53,35 @@ a:hover { color: var(--brand-dark); text-decoration: underline }
 .step-badge{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;background:#e7f1ff;color:#0d6efd}
 /* Cards and list-group (PHP parity) */
 .card{ border:0; box-shadow: var(--card-shadow); border-radius:1rem }
+.inner-page-shell .card{
+  border: 1px solid rgba(15,23,42,.04);
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.96));
+}
 .list-group-item{ border:0; border-left:4px solid rgba(13,110,253,.15); padding-left:1rem }
 .list-group-item + .list-group-item{ margin-top:.5rem }
+.inner-page-shell .list-group-item{
+  background: #fff;
+  border-radius: .75rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+.inner-page-shell .table{
+  --bs-table-bg: transparent;
+  border-color: rgba(15, 23, 42, 0.1);
+}
+.inner-page-shell .table thead th{
+  background: rgba(13,110,253,.06);
+}
+.inner-page-shell .accordion-item{
+  border: 1px solid rgba(15,23,42,.08);
+  border-radius: .75rem;
+  overflow: hidden;
+}
+.inner-page-shell .accordion-item + .accordion-item{
+  margin-top: .6rem;
+}
+.inner-page-shell .accordion-button{
+  font-weight: 600;
+}
 
 /* Layout rhythm */
 main > section { padding-block: 3rem }
