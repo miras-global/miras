@@ -13,10 +13,10 @@ export default function LayoutChrome({ children }: PropsWithChildren) {
   }
   // Default: show header/footer
   return (
-    <>
+    <div className="inner-app">
       <Header />
-      <main>{children}</main>
+      <main className="inner-page-shell">{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }

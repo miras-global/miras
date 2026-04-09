@@ -105,9 +105,9 @@ export default function DecryptPage() {
   return (
     <section className="py-5">
       <div className="container">
-        <header className="mb-4">
-          <h1 className="fw-bold">Decrypt</h1>
-          <p className="text-secondary mb-0">
+        <header className="mb-4 p-4 p-lg-5 rounded-4 hero-gradient text-white">
+          <h1 className="fw-bold">Decrypt Toolkit</h1>
+          <p className="text-white-50 mb-0">
             Upload your ethers keystore JSON, decrypt with passphrase, and expose keys to the console.
           </p>
         </header>

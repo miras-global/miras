@@ -23,6 +23,16 @@ function statusToLabel(s: number): string {
   }
 }
 
+function statusBadgeClass(s: number): string {
+  switch (s) {
+    case 0: return "text-bg-warning";
+    case 1: return "text-bg-success";
+    case 2: return "text-bg-danger";
+    case 3: return "text-bg-secondary";
+    default: return "text-bg-dark";
+  }
+}
+
 type ClaimRow = {
   id: number;
   claimer: string;
@@ -137,9 +147,14 @@ export default function TrackPage() {
 
   return (
     <div className="container my-4">
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        <h1 className="h4 m-0">Attester Claims Tracker</h1>
-        {account && <span className="text-muted small">Connected: {account}</span>}
+      <div className="mb-4 p-4 rounded-4 hero-gradient text-white">
+        <div className="d-flex flex-wrap align-items-center justify-content-between gap-2">
+          <div>
+            <h1 className="h3 m-0 fw-bold">Attester Claims Tracker</h1>
+            <p className="mb-0 text-white-50">Search claims and decrypt Safe IDs with your attester keystore.</p>
+          </div>
+          {account && <span className="badge text-bg-light text-dark">Connected: {account}</span>}
+        </div>
       </div>
 
       <div className="card mb-4">
@@ -194,7 +209,7 @@ export default function TrackPage() {
       <div className="card">
         <div className="card-body p-0">
           <div className="table-responsive">
-            <table className="table table-sm table-striped table-hover mb-0">
+            <table className="table table-sm table-hover mb-0">
               <thead className="table-light">
                 <tr>
                   <th scope="col">ID</th>
@@ -220,7 +235,7 @@ export default function TrackPage() {
                     <td className="fw-monospace">{r.safe}</td>
                     <td className="fw-monospace">{r.attestor}</td>
                     <td>{new Date(r.createdAt * 1000).toLocaleString()}</td>
-                    <td><span className="badge text-bg-secondary">{statusToLabel(r.status)}</span></td>
+                    <td><span className={`badge ${statusBadgeClass(r.status)}`}>{statusToLabel(r.status)}</span></td>
                   </tr>
                 ))}
               </tbody>

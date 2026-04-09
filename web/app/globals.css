@@ -71,3 +71,48 @@ footer{ border-top: 1px solid var(--border); padding: 20px 0; color: var(--muted
 }
 .footer-line{height:1px; background:linear-gradient(90deg, rgba(123,140,255,.0), rgba(123,140,255,.4), rgba(123,140,255,.0))}
 .badge-chip{font-size:.8rem; border:1px solid rgba(255,255,255,.12); padding:.35rem .6rem; border-radius:999px; color:#a0a3aa}
+
+/* Inner pages polish */
+.inner-app{
+  min-height:100vh;
+  background:
+    radial-gradient(900px 450px at -10% -15%, rgba(13,110,253,.12), rgba(13,110,253,0) 55%),
+    radial-gradient(900px 450px at 110% -25%, rgba(111,66,193,.10), rgba(111,66,193,0) 58%),
+    var(--bg);
+}
+.inner-page-shell{
+  padding: 1.25rem 0 3rem;
+}
+.inner-page-shell .container{
+  max-width: 1120px;
+}
+.inner-page-shell .card{
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: linear-gradient(180deg, #fff 0%, #fcfdff 100%);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, .07);
+}
+.inner-page-shell .card .card-header{
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+.inner-page-shell .form-control,
+.inner-page-shell .form-select{
+  border-radius: .7rem;
+  border-color: rgba(15, 23, 42, .14);
+  box-shadow: none;
+}
+.inner-page-shell .form-control:focus,
+.inner-page-shell .form-select:focus{
+  border-color: rgba(13,110,253,.45);
+  box-shadow: 0 0 0 .22rem rgba(13,110,253,.14);
+}
+.inner-page-shell .table{
+  --bs-table-bg: transparent;
+}
+.inner-page-shell .table thead th{
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.inner-page-shell .badge{
+  border-radius: 999px;
+}

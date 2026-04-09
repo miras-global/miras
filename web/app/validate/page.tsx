@@ -4,9 +4,9 @@ export default function ValidatePage(){
   return (
     <section className="py-5">
       <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Validate</h1>
-          <p className="text-secondary">Review evidence, coordinate attestations, and finalize outcomes.</p>
+        <header className="mb-4 p-4 p-lg-5 rounded-4 hero-gradient text-white">
+          <h1 className="fw-bold mb-2">Validate Claims</h1>
+          <p className="text-white-50 mb-0">Review evidence, coordinate attestations, and finalize outcomes.</p>
         </header>
 
         <div className="row g-3">
