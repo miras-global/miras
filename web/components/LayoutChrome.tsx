@@ -15,7 +15,7 @@ export default function LayoutChrome({ children }: PropsWithChildren) {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="app-main">{children}</main>
       <Footer />
     </>
   );

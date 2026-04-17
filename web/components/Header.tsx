@@ -9,18 +9,29 @@ export default function Header() {
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(href + "/");
   };
+
+  const walletBtnStyle = {
+    background: 'rgba(15, 23, 42, 0.72)',
+    border: '1px solid rgba(148, 163, 184, 0.32)',
+    borderRadius: '10px',
+    color: 'rgba(255, 255, 255, 0.92)',
+    cursor: 'pointer',
+    fontSize: '12px',
+    padding: '6px 12px',
+    fontWeight: '600' as const,
+    transition: 'all 0.2s ease',
+  };
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top">
         <div className="container">
           <Link href="/" className="navbar-brand d-flex align-items-center gap-2">
-          <span className="fw-bold d-flex align-items-center gap-2">
-
-          <i className="bi bi-piggy-bank fs-1 me-2" />
+            <i className="bi bi-piggy-bank fs-3" />
             <span className="fw-bold">miras.global</span>
             <sup>β</sup>
-          </span>
           </Link>
+
           <button
             className="navbar-toggler"
             type="button"
@@ -32,8 +43,9 @@ export default function Header() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+
           <div className="collapse navbar-collapse" id="mainNavbar">
-            <ul className="navbar-nav ms-auto mb-2 mb-md-0">
+            <ul className="navbar-nav ms-auto mb-2 mb-md-0 align-items-lg-center">
               <li className="nav-item">
                 <Link href="/learn-more" className={`nav-link${isActive('/learn-more') ? ' active' : ''}`}>Learn More</Link>
               </li>
@@ -56,7 +68,7 @@ export default function Header() {
                 >
                   Attester
                 </a>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu dropdown-menu-dark">
                   <li>
                     <Link href="/register" className={`dropdown-item${isActive('/register') ? ' active' : ''}`}>Register</Link>
                   </li>
@@ -65,118 +77,54 @@ export default function Header() {
                   </li>
                 </ul>
               </li>
-            </ul>
-          </div>
-          <div style={{ position: 'absolute', top: '-2px', right: '20px', zIndex: 1050 }}>
-            <ConnectButton.Custom>
-              {({
-                account,
-                chain,
-                openAccountModal,
-                openChainModal,
-                openConnectModal,
-                mounted,
-              }) => {
-                const ready = mounted;
-                const connected = ready && account && chain;
+              <li className="nav-item ms-lg-3 mt-2 mt-lg-0">
+                <ConnectButton.Custom>
+                  {({
+                    account,
+                    chain,
+                    openAccountModal,
+                    openChainModal,
+                    openConnectModal,
+                    mounted,
+                  }) => {
+                    const ready = mounted;
+                    const connected = ready && account && chain;
 
-                return (
-                  <div
-                    {...(!ready && {
-                      'aria-hidden': true,
-                      style: {
-                        opacity: 0,
-                        pointerEvents: 'none',
-                        userSelect: 'none',
-                      },
-                    })}
-                  >
-                    {(() => {
-                      if (!connected) {
-                        return (
+                    return (
+                      <div
+                        {...(!ready && {
+                          'aria-hidden': true,
+                          style: {
+                            opacity: 0,
+                            pointerEvents: 'none',
+                            userSelect: 'none',
+                          },
+                        })}
+                      >
+                        {!connected ? (
                           <button
                             onClick={openConnectModal}
                             type="button"
-                            style={{
-                              background: 'rgba(255, 255, 255, 0.08)',
-                              border: '1px solid rgba(255, 255, 255, 0.15)',
-                              borderRadius: '6px',
-                              color: 'rgba(255, 255, 255, 0.85)',
-                              cursor: 'pointer',
-                              fontSize: '13px',
-                              padding: '6px 14px',
-                              fontWeight: '500',
-                              transition: 'all 0.2s ease',
-                            }}
-                            onMouseOver={(e) => {
-                              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-                              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-                            }}
-                            onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                            }}
+                            style={walletBtnStyle}
                           >
-                            Connect
+                            Connect Wallet
                           </button>
-                        );
-                      }
-
-                      return (
-                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                          <button
-                            onClick={openChainModal}
-                            type="button"
-                            style={{
-                              background: 'rgba(255, 255, 255, 0.08)',
-                              border: '1px solid rgba(255, 255, 255, 0.15)',
-                              borderRadius: '6px',
-                              padding: '4px 10px',
-                              cursor: 'pointer',
-                              fontSize: '12px',
-                              color: 'rgba(255, 255, 255, 0.85)',
-                              fontWeight: '500',
-                              transition: 'all 0.2s ease',
-                            }}
-                            onMouseOver={(e) => {
-                              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-                            }}
-                            onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                            }}
-                          >
-                            {chain.name}
-                          </button>
-                          <button
-                            onClick={openAccountModal}
-                            type="button"
-                            style={{
-                              background: 'rgba(255, 255, 255, 0.08)',
-                              border: '1px solid rgba(255, 255, 255, 0.15)',
-                              borderRadius: '6px',
-                              padding: '4px 10px',
-                              cursor: 'pointer',
-                              fontSize: '12px',
-                              color: 'rgba(255, 255, 255, 0.85)',
-                              fontWeight: '500',
-                              transition: 'all 0.2s ease',
-                            }}
-                            onMouseOver={(e) => {
-                              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-                            }}
-                            onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                            }}
-                          >
-                            {account.displayName}
-                          </button>
-                        </div>
-                      );
-                    })()}
-                  </div>
-                );
-              }}
-            </ConnectButton.Custom>
+                        ) : (
+                          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                            <button onClick={openChainModal} type="button" style={walletBtnStyle}>
+                              {chain.name}
+                            </button>
+                            <button onClick={openAccountModal} type="button" style={walletBtnStyle}>
+                              {account.displayName}
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }}
+                </ConnectButton.Custom>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
