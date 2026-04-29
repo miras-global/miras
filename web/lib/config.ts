@@ -3,9 +3,11 @@
  * Reads from environment variables with fallback to hardcoded values
  */
 
-//const IS_MAINNET = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
-export const TESTNET_ONLY = true;
-const IS_MAINNET = !TESTNET_ONLY && process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
+// Master network switch.
+//   true  → Sepolia only (hides mainnet from wallet picker, shows "Testnet Only" badge)
+//   false → Mainnet + Sepolia available; default chain controlled by NEXT_PUBLIC_NETWORK
+export const TESTNET_ONLY = false;
+const IS_MAINNET = !TESTNET_ONLY && process.env.NEXT_PUBLIC_NETWORK !== 'sepolia';
 
 export type NetworkConfig = {
   id: number;

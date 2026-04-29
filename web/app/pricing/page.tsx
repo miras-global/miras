@@ -1,87 +1,110 @@
 export const dynamic = "force-static";
 
+const TIERS = [
+  {
+    icon: "bi-shield-check",
+    title: "Attesters & Validators",
+    price: "100 MRS",
+    note: "subject to change/increase over time",
+    bullets: [
+      "Deposits displayed publicly for trust",
+      "Validators may withdraw commitment on exit",
+      <><strong>Slashing</strong> for misbehavior or violations</>,
+    ],
+  },
+  {
+    icon: "bi-rocket-takeoff",
+    title: "Create a Miras contract",
+    price: "0.4 ETH",
+    note: "subject to change",
+    bullets: [
+      "Encourages a diverse quorum of independent attesters",
+    ],
+  },
+  {
+    icon: "bi-flag",
+    title: "Create a claim",
+    price: "40 MRS",
+    note: "subject to change (reduction only)",
+    bullets: [
+      <>Fees primarily <strong>incentivize validators</strong> to do business</>,
+      "Future reductions possible; no increases under this policy",
+    ],
+  },
+  {
+    icon: "bi-chat-square-quote",
+    title: "Add an attester review",
+    price: "0.001 ETH",
+    note: "subject to change",
+    bullets: [
+      "Streamlines reputation building and accountability",
+    ],
+  },
+];
+
 export default function PricingPage(){
   return (
-    <section className="py-5">
-      <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Pricing</h1>
-          <p className="text-secondary">Transparent fees aligned with network security and sustainability.</p>
-        </header>
-
-        <div className="row g-3">
-          <div className="col-12 col-md-6">
-            <div className="card h-100">
-              <div className="card-body">
-                <h5 className="card-title">Attesters & Validators</h5>
-                <p className="card-text">
-                  Minimum commitment <span className="price">100 MRS</span> <span className="pill">subject to change/increase over time</span>
-                </p>
-                <ul className="mb-0">
-                  <li>Deposits displayed publicly for trust.</li>
-                  <li>Validators may withdraw commitment on exit.</li>
-                  <li><strong>Slashing</strong> for misbehavior or violations.</li>
-                </ul>
-              </div>
+    <>
+      {/* Hero */}
+      <section className="hero-gradient">
+        <div className="container">
+          <div className="row align-items-end g-4">
+            <div className="col-lg-8">
+              <span className="kicker"><i className="bi bi-coin"></i> Pricing</span>
+              <h1 className="display-5 mt-3 mb-3">
+                Transparent fees,<br/>
+                <span className="text-gradient">aligned with security.</span>
+              </h1>
+              <p className="lead mb-0">
+                Fees fund the network — incentivizing validators, securing claims, and sustaining the protocol.
+              </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="col-12 col-md-6">
-            <div className="card h-100">
-              <div className="card-body">
-                <h5 className="card-title">Create a Miras Contract</h5>
-                <p className="card-text">
-                  <span className="price">0.4 ETH</span> 
-                  <span className="pill ms-2">subject to change</span>
-                </p>
-                <ul className="mb-0">
-                  <li>Encourages a diverse quorum of independent attesters.</li>
-                </ul>
+      {/* Tiers */}
+      <section>
+        <div className="container">
+          <div className="row g-3">
+            {TIERS.map((t) => (
+              <div className="col-12 col-md-6" key={t.title}>
+                <div className="card card-glow h-100">
+                  <div className="card-body">
+                    <div className="d-flex align-items-center gap-3 mb-3">
+                      <div className="step-badge"><i className={`bi ${t.icon}`}></i></div>
+                      <h5 className="card-title mb-0">{t.title}</h5>
+                    </div>
+                    <div className="d-flex align-items-baseline flex-wrap gap-2 mb-3">
+                      <span className="price">{t.price}</span>
+                      <span className="pill">{t.note}</span>
+                    </div>
+                    <ul className="list-unstyled mb-0">
+                      {t.bullets.map((b, i) => <li key={i} className="mb-2">{b}</li>)}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="card mt-4">
+            <div className="card-body" style={{padding:'1.75rem'}}>
+              <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                <div className="d-flex align-items-center gap-3">
+                  <div className="step-badge"><i className="bi bi-bank"></i></div>
+                  <div>
+                    <h5 className="mb-1">Treasury & maintenance</h5>
+                    <p className="text-muted mb-0">
+                      <strong>25% of all fees</strong> are allocated to the treasury for ongoing maintenance and sustainability.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div className="row g-3 mt-0">
-          <div className="col-12 col-md-6">
-            <div className="card h-100">
-              <div className="card-body">
-                <h5 className="card-title">Create a Claim</h5>
-                <p className="card-text">
-                  <span className="price">40 MRS</span>
-                  <span className="pill ms-2">subject to change (reduction only)</span>
-                </p>
-                <ul className="mb-0">
-                  <li>Fees primarily <strong>incentivize validators</strong> to do business.</li>
-                  <li>Future reductions possible; no increases under this policy.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-12 col-md-6">
-            <div className="card h-100">
-              <div className="card-body">
-                <h5 className="card-title">Add an Attester Review</h5>
-                <p className="card-text">
-                  <span className="price">0.001 ETH</span> <span className="pill">subject to change</span>
-                </p>
-                <ul className="mb-0">
-                  <li>Streamlines reputation building and accountability.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="card mt-3">
-          <div className="card-body">
-            <h5 className="card-title mb-2">Treasury & Maintenance</h5>
-            <p className="mb-0"><strong>25% of all fees</strong> are allocated to the <strong>treasury</strong> for ongoing maintenance and sustainability.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
-

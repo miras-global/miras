@@ -236,12 +236,16 @@ export default function SwitchPage() {
   }
 
   return (
-    <section className="py-5">
+    <>
+    <section className="hero-gradient">
       <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Dead Man&apos;s Switch</h1>
-          <p className="text-muted">Simple time-based inheritance for your crypto assets</p>
-        </header>
+        <span className="kicker"><i className="bi bi-clock-history"></i> Dead Man&apos;s Switch</span>
+        <h1 className="display-5 mt-3 mb-2">Simple, time-based <span className="text-gradient">inheritance</span></h1>
+        <p className="lead mb-0">Deploy a smart contract that releases assets to your heir if you stop checking in.</p>
+      </div>
+    </section>
+    <section>
+      <div className="container">
 
         <div className="row g-3">
           <div className="col-12">
@@ -511,5 +515,6 @@ export default function SwitchPage() {
         )}
       </div>
     </section>
+    </>
   );
 }

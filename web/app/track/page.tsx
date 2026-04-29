@@ -136,12 +136,21 @@ export default function TrackPage() {
   }, [attestor, contractAddress, walletClient]);
 
   return (
-    <div className="container my-4">
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        <h1 className="h4 m-0">Attester Claims Tracker</h1>
-        {account && <span className="text-muted small">Connected: {account}</span>}
+    <>
+    <section className="hero-gradient">
+      <div className="container">
+        <div className="d-flex align-items-end justify-content-between flex-wrap gap-3">
+          <div>
+            <span className="kicker"><i className="bi bi-search"></i> Tracker</span>
+            <h1 className="display-5 mt-3 mb-2">Attester <span className="text-gradient">claims tracker</span></h1>
+            <p className="lead mb-0">Scan recent claims and review activity assigned to your attester address.</p>
+          </div>
+          {account && <span className="text-muted small">Connected: {account}</span>}
+        </div>
       </div>
-
+    </section>
+    <section>
+    <div className="container">
       <div className="card mb-4">
         <div className="card-body">
           <div className="row g-3">
@@ -233,5 +242,7 @@ export default function TrackPage() {
         Scans latest IDs first (up to 2000) and lists up to 200 matches. Adjust limits in code if needed.
       </p>
     </div>
+    </section>
+    </>
   );
 }

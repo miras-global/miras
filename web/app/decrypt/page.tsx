@@ -103,15 +103,16 @@ export default function DecryptPage() {
   }
 
   return (
-    <section className="py-5">
+    <>
+    <section className="hero-gradient">
       <div className="container">
-        <header className="mb-4">
-          <h1 className="fw-bold">Decrypt</h1>
-          <p className="text-secondary mb-0">
-            Upload your ethers keystore JSON, decrypt with passphrase, and expose keys to the console.
-          </p>
-        </header>
-
+        <span className="kicker"><i className="bi bi-unlock"></i> Decrypt</span>
+        <h1 className="display-5 mt-3 mb-2"><span className="text-gradient">Decrypt</span> your keystore</h1>
+        <p className="lead mb-0">Upload an ethers keystore JSON, decrypt with passphrase, and expose keys to the console.</p>
+      </div>
+    </section>
+    <section>
+      <div className="container">
         <div className="card">
           <div className="card-body">
 
@@ -179,5 +180,6 @@ console.log({ b64, msg });`}</pre>
         </div>
       </div>
     </section>
+    </>
   );
 }

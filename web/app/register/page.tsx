@@ -259,12 +259,16 @@ export default function RegisterPage(){
   }
 
   return (
-    <section className="py-5">
+    <>
+    <section className="hero-gradient">
       <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Register as Attester</h1>
-          <p className="text-secondary">Create your profile and prepare your staking commitment.</p>
-        </header>
+        <span className="kicker"><i className="bi bi-person-badge"></i> Attester</span>
+        <h1 className="display-5 mt-3 mb-2">Register as <span className="text-gradient">Attester</span></h1>
+        <p className="lead mb-0">Create your profile and prepare your staking commitment.</p>
+      </div>
+    </section>
+    <section>
+      <div className="container">
 
         {/* Why become an Attester */}
         <div className="alert alert-info" role="alert">
@@ -410,5 +414,6 @@ export default function RegisterPage(){
         </div>
       </div>
     </section>
+    </>
   );
 }

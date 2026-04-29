@@ -267,13 +267,16 @@ export default function LaunchManualPage() {
   }, [validatedSeed, phone1, phone2, email1, email2, governmentId, safeAddress, ensureAccounts, ensureNetwork, getEthersSigner, showAlert]);
 
   return (
-    <section className="py-5">
+    <>
+    <section className="hero-gradient">
       <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Manual Launch</h1>
-          <p className="text-muted">Add a new key to your existing Safe</p>
-        </header>
-
+        <span className="kicker"><i className="bi bi-tools"></i> Manual Launch</span>
+        <h1 className="display-5 mt-3 mb-2">Add a key to your <span className="text-gradient">existing Safe</span></h1>
+        <p className="lead mb-0">For users who already have a Safe deployed and want to wire up Miras attesters.</p>
+      </div>
+    </section>
+    <section>
+      <div className="container">
         <div className="row g-3">
           <div className="col-12">
             {alert && (
@@ -512,5 +515,6 @@ export default function LaunchManualPage() {
         )}
       </div>
     </section>
+    </>
   );
 }

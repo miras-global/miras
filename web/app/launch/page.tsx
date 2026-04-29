@@ -624,14 +624,16 @@ useEffect(() => {
   
 
   return (
-    <section className="py-5">
+    <>
+    <section className="hero-gradient">
       <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Launch</h1>
-        </header>
-
-        
-
+        <span className="kicker"><i className="bi bi-plug"></i> Launch with attesters</span>
+        <h1 className="display-5 mt-3 mb-2">Deploy your <span className="text-gradient">Safe</span></h1>
+        <p className="lead mb-0">Generate keys, configure your policy, and assign attesters in a single flow.</p>
+      </div>
+    </section>
+    <section>
+      <div className="container">
         <div className="row g-3">
 
 
@@ -976,6 +978,6 @@ useEffect(() => {
       )}
       </div>
     </section>
-    
+    </>
   );
 }

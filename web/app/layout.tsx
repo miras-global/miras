@@ -1,8 +1,8 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import '@rainbow-me/rainbowkit/styles.css';
+import "./globals.css";
 import BootstrapClient from "@/components/BootstrapClient";
 import RouteContainer from "@/components/RouteContainer";
 import LayoutChrome from "@/components/LayoutChrome";
