@@ -8,11 +8,17 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   return (
+    <>
+    <section className="hero-gradient">
+      <div className="container">
+        <span className="kicker"><i className="bi bi-file-earmark-text"></i> Legal</span>
+        <h1 className="display-5 mt-3 mb-2">Terms of <span className="text-gradient">Service</span></h1>
+        <p className="lead mb-0">Effective Date: 26 September 2025</p>
+      </div>
+    </section>
     <section className="container py-5">
       <div className="row justify-content-center">
         <div className="col-lg-10 col-xl-8">
-          <h1 className="mb-4">Miras Terms of Service</h1>
-          <p className="text-muted">Effective Date: 26 September 2025</p>
 
           <p>
             These Terms of Service (&quot;Terms&quot;) govern your access to and use of the products and
@@ -164,5 +170,6 @@ export default function TermsOfServicePage() {
         </div>
       </div>
     </section>
+    </>
   );
 }

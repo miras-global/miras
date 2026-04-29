@@ -2,274 +2,260 @@ export const dynamic = "force-static";
 
 import Link from "next/link";
 
+const REQUIREMENTS = [
+  {
+    icon: "bi-wallet2",
+    n: "01",
+    title: "A secure wallet",
+    body: "Hardware or multi-sig-capable wallet for generating keys safely.",
+  },
+  {
+    icon: "bi-person-lines-fill",
+    n: "02",
+    title: "Heir contact",
+    body: "Heir’s public contact for verification and claim initiation.",
+  },
+  {
+    icon: "bi-sliders2",
+    n: "03",
+    title: "Your policy",
+    body: "Choose dead man’s switch, quorum (e.g., 2-of-3), waiting period, and required evidence.",
+  },
+];
+
+const ATTESTER_STEPS = [
+  { n: 1, title: "Generate keys",   body: "Create a threshold multi-sig (e.g., 2-of-3). Retain Key A, give Key B to your heir, and encrypt Key C for protocol escrow." },
+  { n: 2, title: "Configure policy", body: "Set waiting period, required evidence (e.g., death certificate), and escalation rules." },
+  { n: 3, title: "Encrypt & escrow", body: "Encrypt Key C locally. Only the ciphertext is stored; plaintext is never shared." },
+  { n: 4, title: "Prepare heir kit", body: "Assemble the USB kit with wallet app, public info, and guidance — never store private keys unencrypted." },
+];
+
 export default function GetStartedPage() {
   return (
     <>
-      {/* Header (hero) */}
-      <header className="hero-gradient text-white py-5">
-        <div className="container py-3">
-          <div className="row align-items-center g-4">
+      {/* Hero */}
+      <section className="hero-gradient">
+        <div className="container">
+          <div className="row align-items-end g-4">
             <div className="col-lg-8">
-              <h1 className="display-5 fw-bold mb-2">Get Started</h1>
-              <p className="lead mb-0 text-white-50">
-                Set up trustless inheritance for your Bitcoin/Ethereum in minutes.
+              <span className="kicker"><i className="bi bi-rocket-takeoff"></i> Get started</span>
+              <h1 className="display-5 mt-3 mb-3">
+                Set up trustless inheritance<br/>
+                <span className="text-gradient">in minutes.</span>
+              </h1>
+              <p className="lead mb-0">
+                Choose your model, configure policy, and prepare your heir — all without lawyers or custodians.
               </p>
+            </div>
+            <div className="col-lg-4 text-lg-end">
+              <a href="#models" className="btn btn-primary btn-lg">
+                Choose a model <i className="bi bi-arrow-down ms-1"></i>
+              </a>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* Content */}
-      <main className="py-5">
+      {/* Requirements */}
+      <section>
         <div className="container">
-          {/* Requirements */}
-          <section className="mb-5">
-            <h2 className="fw-bold section-title mb-4">What You Need</h2>
-            <div className="row g-4">
-              <div className="col-md-4">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <div className="step-badge mb-3">1</div>
-                    <h5 className="card-title">A Secure Wallet</h5>
-                    <p className="text-muted mb-0">
-                      Hardware or multi-sig-capable wallet for generating keys safely.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <div className="step-badge mb-3">2</div>
-                    <h5 className="card-title">Heir Contact</h5>
-                    <p className="text-muted mb-0">
-                      Heir’s public contact for verification and claim initiation.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <div className="step-badge mb-3">3</div>
-                    <h5 className="card-title">Your Policy</h5>
-                    <p className="text-muted mb-0">
-                      Choose dead man&apos;s switch, quorum (e.g., 2-of-3), waiting period, and documents required.
-                    </p>
-                  </div>
-                </div>
-              </div>
+          <div className="row mb-4">
+            <div className="col-lg-8">
+              <h2 className="section-title">What you need</h2>
+              <p className="text-muted mt-2 mb-0">Three small ingredients before you launch.</p>
             </div>
-          </section>
-
-          {/* Packages explainer */}
-          
-          <section className="mb-5">
-            <div className="card border-0 p-4 p-md-5">
-              <div className="card-body">
-                <div className="d-flex align-items-start gap-3">
-                  <div className="step-badge flex-shrink-0">ℹ️</div>
-                  <div>
-                    <h3 className="fw-bold mb-2">
-                      Packages: One Safe per Heir or Asset Bundle
-                    </h3>
-                    <p className="text-muted mb-3">
-                      For clarity and security, create a separate Safe (multisig wallet) for each heir or distinct group of assets (“packages”). This isolates risk, lets you customize thresholds/owners per package, and makes execution simpler.
-                    </p>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          
-
- 
-
-          {/* Choose Your Model */}
-          <section className="mb-5">
-            <h2 className="fw-bold section-title mb-4">Choose Your Inheritance Model</h2>
-            <p className="text-muted mb-4">
-              Miras offers two different approaches to crypto inheritance. Choose the one that best fits your needs.
-            </p>
-            <div className="row g-4">
-              <div className="col-lg-6">
-                <div className="card h-100 border-primary">
-                  <div className="card-header bg-primary text-white">
-                    <h5 className="mb-0"><i className="bi bi-people me-2"></i>Attester Model</h5>
-                  </div>
+          </div>
+          <div className="row g-3">
+            {REQUIREMENTS.map((r) => (
+              <div className="col-md-4" key={r.title}>
+                <div className="card h-100">
                   <div className="card-body">
-                    <p className="text-muted mb-3">
-                      A decentralized verification system where staked attesters verify inheritance claims. This model provides strong security through multi-party verification and configurable waiting periods.
-                    </p>
-                    <h6 className="fw-bold">Best for:</h6>
-                    <ul className="text-muted mb-3">
-                      <li>Large estates requiring maximum security</li>
-                      <li>Users who want third-party verification of death</li>
-                      <li>Complex inheritance scenarios with multiple heirs</li>
-                    </ul>
-                    <h6 className="fw-bold">How it works:</h6>
-                    <ul className="text-muted mb-3">
-                      <li>Create a 2-of-3 multisig Safe wallet</li>
-                      <li>Attesters verify claims and contact you before releasing funds</li>
-                      <li>Configurable waiting period (default 90 days)</li>
-                      <li>You can cancel claims if you&apos;re still alive</li>
-                    </ul>
-                    <div className="d-grid gap-2">
-                      <Link href="/launch" className="btn btn-primary btn-lg">
-                        <i className="bi bi-plug me-2"></i>Launch with Attesters
-                      </Link>
-                      <Link href="/launch-manual" className="btn btn-outline-primary btn-sm">
-                        Manual Setup (existing Safe)
-                      </Link>
+                    <div className="d-flex align-items-center justify-content-between mb-3">
+                      <div className="step-badge"><i className={`bi ${r.icon}`}></i></div>
+                      <span className="text-muted" style={{fontFamily:'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize:'.78rem', letterSpacing:'.08em'}}>{r.n}</span>
                     </div>
+                    <h5 className="card-title">{r.title}</h5>
+                    <p className="text-muted mb-0">{r.body}</p>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-6">
-                <div className="card h-100 border-success">
-                  <div className="card-header bg-success text-white">
-                    <h5 className="mb-0"><i className="bi bi-clock-history me-2"></i>Dead Man&apos;s Switch</h5>
-                  </div>
-                  <div className="card-body">
-                    <p className="text-muted mb-3">
-                      A simple time-based inheritance contract. If you don&apos;t interact with the contract for 1 year, your heir can automatically withdraw all funds. No attesters or third parties involved.
-                    </p>
-                    <h6 className="fw-bold">Best for:</h6>
-                    <ul className="text-muted mb-3">
-                      <li>Simple, single-heir inheritance</li>
-                      <li>Users who prefer fully automated solutions</li>
-                      <li>Smaller amounts or backup inheritance plans</li>
-                    </ul>
-                    <h6 className="fw-bold">How it works:</h6>
-                    <ul className="text-muted mb-3">
-                      <li>Deploy a simple smart contract with your heir&apos;s address</li>
-                      <li>Send ETH to the contract to fund it</li>
-                      <li>Any transfer resets the 1-year timer</li>
-                      <li>After 1 year of inactivity, heir can withdraw everything</li>
-                    </ul>
-                    <div className="d-grid">
-                      <Link href="/switch" className="btn btn-success btn-lg">
-                        <i className="bi bi-clock-history me-2"></i>Launch Dead Man&apos;s Switch
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Comparison Table */}
-          <section className="mb-5">
-            <h2 className="fw-bold section-title mb-4">Model Comparison</h2>
-            <div className="table-responsive">
-              <table className="table table-bordered">
-                <thead className="table-light">
-                  <tr>
-                    <th>Feature</th>
-                    <th>Attester Model</th>
-                    <th>Dead Man&apos;s Switch</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Verification</strong></td>
-                    <td>Third-party attesters verify death</td>
-                    <td>Automatic after 1 year of inactivity</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Security Level</strong></td>
-                    <td>High (multi-party verification)</td>
-                    <td>Medium (time-based only)</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Complexity</strong></td>
-                    <td>More complex setup</td>
-                    <td>Simple, single contract</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Cost</strong></td>
-                    <td>Higher (Safe creation + attester fees)</td>
-                    <td>Lower (single contract deployment)</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Cancellation</strong></td>
-                    <td>Can cancel claims anytime</td>
-                    <td>Reset timer by sending any transfer</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Multiple Heirs</strong></td>
-                    <td>Supported (multiple Safes)</td>
-                    <td>One heir per contract</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Waiting Period</strong></td>
-                    <td>Configurable (default 90 days)</td>
-                    <td>Fixed at 1 year</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-
-         {/* Setup Steps */}
-          
-          <section id="setup" className="mb-5">
-            <h2 className="fw-bold section-title mb-4">Attester Model in 4 Steps</h2>
-            <div className="row g-4">
-              <div className="col-lg-6">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <span className="step-badge mb-3">1</span>
-                    <h5 className="card-title">Generate Keys</h5>
-                    <p className="text-muted mb-0">
-                      Create a threshold multi-sig (e.g., 2-of-3). Retain Key A, plan to give Key B to your heir, and encrypt Key C for protocol escrow.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <span className="step-badge mb-3">2</span>
-                    <h5 className="card-title">Configure Policy</h5>
-                    <p className="text-muted mb-0">
-                      Set waiting period, required evidence (e.g., death certificate), and escalation rules.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <span className="step-badge mb-3">3</span>
-                    <h5 className="card-title">Encrypt & Escrow</h5>
-                    <p className="text-muted mb-0">
-                      Encrypt Key C locally. Only the ciphertext is stored; plaintext is never shared.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="card h-100">
-                  <div className="card-body">
-                    <span className="step-badge mb-3">4</span>
-                    <h5 className="card-title">Prepare Heir Kit</h5>
-                    <p className="text-muted mb-0">
-                      Assemble the USB kit with wallet app, public info, and guidance—never store private keys unencrypted.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-          </section>
-          
-
-
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Packages explainer */}
+      <section style={{paddingTop:0}}>
+        <div className="container">
+          <div className="card card-glow">
+            <div className="card-body" style={{padding:'2rem'}}>
+              <div className="d-flex align-items-start gap-3">
+                <div className="step-badge flex-shrink-0"><i className="bi bi-boxes"></i></div>
+                <div>
+                  <h3 className="mb-2">Packages — one Safe per heir or asset bundle</h3>
+                  <p className="text-muted mb-0">
+                    For clarity and security, create a separate Safe (multisig wallet) for each heir or distinct group of
+                    assets. This isolates risk, lets you customize thresholds and owners per package, and makes execution simpler.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Choose Your Model */}
+      <section id="models" style={{paddingTop:0}}>
+        <div className="container">
+          <div className="row mb-4 align-items-end">
+            <div className="col-lg-8">
+              <h2 className="section-title">Choose your inheritance model</h2>
+              <p className="text-muted mt-2 mb-0">Two complementary approaches. Pick the one that fits your situation.</p>
+            </div>
+          </div>
+
+          <div className="row g-4">
+            <div className="col-lg-6">
+              <div className="card card-glow h-100 d-flex flex-column">
+                <div className="card-header">
+                  <i className="bi bi-people me-2" style={{color:'var(--brand)'}}></i>Attester Model
+                </div>
+                <div className="card-body d-flex flex-column">
+                  <p className="text-muted mb-3">
+                    Decentralized verification by staked attesters. Strong security through multi-party verification and a configurable waiting period.
+                  </p>
+                  <h6 className="text-uppercase" style={{letterSpacing:'.1em', fontSize:'.78rem', color:'var(--muted)'}}>Best for</h6>
+                  <ul className="text-muted mb-3">
+                    <li>Large estates requiring maximum security</li>
+                    <li>Users who want third-party verification of death</li>
+                    <li>Complex inheritance scenarios with multiple heirs</li>
+                  </ul>
+                  <h6 className="text-uppercase" style={{letterSpacing:'.1em', fontSize:'.78rem', color:'var(--muted)'}}>How it works</h6>
+                  <ul className="text-muted mb-4">
+                    <li>Create a 2-of-3 multisig Safe wallet</li>
+                    <li>Attesters verify claims and contact you before releasing funds</li>
+                    <li>Configurable waiting period (default 90 days)</li>
+                    <li>You can cancel claims if you&apos;re still alive</li>
+                  </ul>
+                  <div className="d-grid gap-2 mt-auto">
+                    <Link href="/launch" className="btn btn-primary btn-lg">
+                      <i className="bi bi-plug me-2"></i>Launch with Attesters
+                    </Link>
+                    <Link href="/launch-manual" className="btn btn-outline-secondary btn-sm">
+                      Manual setup (existing Safe)
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className="card h-100 d-flex flex-column">
+                <div className="card-header" style={{background:'linear-gradient(135deg, #5ddca4 0%, #58c6e6 100%)', color:'#0b0b0e'}}>
+                  <i className="bi bi-clock-history me-2"></i>Dead Man&apos;s Switch
+                </div>
+                <div className="card-body d-flex flex-column">
+                  <p className="text-muted mb-3">
+                    A simple time-based contract. If you don&apos;t interact for 1 year, your heir can automatically withdraw all funds. No third parties involved.
+                  </p>
+                  <h6 className="text-uppercase" style={{letterSpacing:'.1em', fontSize:'.78rem', color:'var(--muted)'}}>Best for</h6>
+                  <ul className="text-muted mb-3">
+                    <li>Simple, single-heir inheritance</li>
+                    <li>Users who prefer fully automated solutions</li>
+                    <li>Smaller amounts or backup inheritance plans</li>
+                  </ul>
+                  <h6 className="text-uppercase" style={{letterSpacing:'.1em', fontSize:'.78rem', color:'var(--muted)'}}>How it works</h6>
+                  <ul className="text-muted mb-4">
+                    <li>Deploy a simple smart contract with your heir&apos;s address</li>
+                    <li>Send ETH to the contract to fund it</li>
+                    <li>Any transfer resets the 1-year timer</li>
+                    <li>After 1 year of inactivity, heir can withdraw everything</li>
+                  </ul>
+                  <div className="d-grid mt-auto">
+                    <Link href="/switch" className="btn btn-success btn-lg">
+                      <i className="bi bi-clock-history me-2"></i>Launch Dead Man&apos;s Switch
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison */}
+      <section style={{paddingTop:0}}>
+        <div className="container">
+          <div className="row mb-4">
+            <div className="col-lg-8">
+              <h2 className="section-title">Model comparison</h2>
+              <p className="text-muted mt-2 mb-0">At a glance.</p>
+            </div>
+          </div>
+
+          <div className="compare-grid">
+            <div className="head">Feature</div>
+            <div className="head">Attester Model</div>
+            <div className="head">Dead Man&apos;s Switch</div>
+
+            <div>Verification</div>
+            <div>Third-party attesters verify death</div>
+            <div>Automatic after 1 year of inactivity</div>
+
+            <div>Security level</div>
+            <div>High (multi-party verification)</div>
+            <div>Medium (time-based only)</div>
+
+            <div>Complexity</div>
+            <div>More complex setup</div>
+            <div>Simple, single contract</div>
+
+            <div>Cost</div>
+            <div>Higher (Safe creation + attester fees)</div>
+            <div>Lower (single contract deployment)</div>
+
+            <div>Cancellation</div>
+            <div>Can cancel claims anytime</div>
+            <div>Reset timer by sending any transfer</div>
+
+            <div>Multiple heirs</div>
+            <div>Supported (multiple Safes)</div>
+            <div>One heir per contract</div>
+
+            <div>Waiting period</div>
+            <div>Configurable (default 90 days)</div>
+            <div>Fixed at 1 year</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Setup steps */}
+      <section id="setup" style={{paddingTop:0}}>
+        <div className="container">
+          <div className="row mb-4">
+            <div className="col-lg-8">
+              <h2 className="section-title">Attester model in 4 steps</h2>
+              <p className="text-muted mt-2 mb-0">A quick map of the path you&apos;ll walk through.</p>
+            </div>
+          </div>
+
+          <div className="row g-3">
+            {ATTESTER_STEPS.map((s) => (
+              <div className="col-lg-6" key={s.n}>
+                <div className="card h-100">
+                  <div className="card-body">
+                    <div className="d-flex align-items-center gap-3 mb-3">
+                      <span className="step-badge">{s.n}</span>
+                      <h5 className="card-title mb-0">{s.title}</h5>
+                    </div>
+                    <p className="text-muted mb-0">{s.body}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }

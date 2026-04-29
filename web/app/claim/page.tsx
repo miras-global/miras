@@ -298,14 +298,15 @@ setStatus(
 
   return (
     <>
-      <header className="hero-gradient text-white py-5">
-        <div className="container py-3">
-          <h1 className="display-6 fw-bold mb-2">Start a Claim</h1>
-          <p className="lead text-white-50 mb-0">
+      <section className="hero-gradient">
+        <div className="container">
+          <span className="kicker"><i className="bi bi-flag"></i> Claim</span>
+          <h1 className="display-5 mt-3 mb-2">Start a <span className="text-gradient">claim</span></h1>
+          <p className="lead mb-0">
             Begin the inheritance process for a Safe, submit required documentation, and track progress.
           </p>
         </div>
-      </header>
+      </section>
 
       <section className="py-5">
         <div className="container">

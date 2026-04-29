@@ -2,13 +2,16 @@
 
 export default function ValidatePage(){
   return (
-    <section className="py-5">
+    <>
+    <section className="hero-gradient">
       <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Validate</h1>
-          <p className="text-secondary">Review evidence, coordinate attestations, and finalize outcomes.</p>
-        </header>
-
+        <span className="kicker"><i className="bi bi-clipboard-check"></i> Validate</span>
+        <h1 className="display-5 mt-3 mb-2">Review evidence, <span className="text-gradient">finalize outcomes</span></h1>
+        <p className="lead mb-0">Coordinate attestations and confirm the outcome of an inheritance claim.</p>
+      </div>
+    </section>
+    <section>
+      <div className="container">
         <div className="row g-3">
           <div className="col-12 col-lg-7">
             <div className="card h-100">
@@ -47,5 +50,6 @@ export default function ValidatePage(){
         </div>
       </div>
     </section>
+    </>
   );
 }

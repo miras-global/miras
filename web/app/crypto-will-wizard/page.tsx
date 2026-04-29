@@ -168,13 +168,16 @@ ${yourName || '[Your Name]'}
   };
 
   return (
-    <section className="py-5">
+    <>
+    <section className="hero-gradient">
       <div className="container">
-        <header className="mb-4 text-center">
-          <h1 className="fw-bold section-title">Create Your Crypto Will</h1>
-          <p className="text-muted">Fill in the details below to generate a personalized inheritance document for your heirs</p>
-        </header>
-
+        <span className="kicker"><i className="bi bi-file-earmark-text"></i> Crypto Will</span>
+        <h1 className="display-5 mt-3 mb-2">Create your <span className="text-gradient">crypto will</span></h1>
+        <p className="lead mb-0">Generate a personalized inheritance document your heirs can actually follow.</p>
+      </div>
+    </section>
+    <section>
+      <div className="container">
         <div className="row">
           <div className="col-lg-6">
             <div className="card mb-4">
@@ -338,6 +341,7 @@ ${yourName || '[Your Name]'}
         </div>
       </div>
     </section>
+    </>
   );
 }
 
