@@ -23,6 +23,8 @@ export default function Footer(){
             <span className="footer-dot" aria-hidden>•</span>
             <Link href="/tos" className={linkCls}>TOS</Link>
             <span className="footer-dot" aria-hidden>•</span>
+            <Link href="https://pressreleases.online/org/miras.global" target="_blank" className={linkCls}>Press Releases</Link>
+            <span className="footer-dot" aria-hidden>•</span>
             <Link href="https://github.com/miras-global/miras" className={linkCls}>Source</Link>
           </div>
           <div className="footer-meta">
