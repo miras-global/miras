@@ -84,6 +84,8 @@ contract SafeTableV6 is UUPSUpgradeable {
         string[] encryptedProtocolPhrases;
     }
 
+    uint256 private constant MAX_ATTESTERS = 20;
+
     // rows[safe_address] => Row
     mapping(address => Row) private rows;
     // enumeration of safes per owner
@@ -135,6 +137,8 @@ contract SafeTableV6 is UUPSUpgradeable {
         require(r.createdAt == 0, "exists");
         require(msg.value >= fee, "fee not met");
         require(attesters.length == encryptedPhones.length, "length mismatch");
+        require(attesters.length == encryptedProtocolPhrases.length, "phrases length mismatch");
+        require(attesters.length <= MAX_ATTESTERS, "too many attesters");
 
         r.owner = msg.sender;
         r.safe_address = safe_address;
@@ -171,6 +175,8 @@ contract SafeTableV6 is UUPSUpgradeable {
         require(r.owner == msg.sender, "not owner");
         require(msg.value >= fee, "fee not met");
         require(attesters.length == encryptedPhones.length, "length mismatch");
+        require(attesters.length == encryptedProtocolPhrases.length, "phrases length mismatch");
+        require(attesters.length <= MAX_ATTESTERS, "too many attesters");
 
         r.waiting_period = waiting_period;
         r.death_certificate = death_certificate;
@@ -246,6 +252,8 @@ contract SafeTableV6 is UUPSUpgradeable {
     }
 
     function withdraw(uint256 amount) external onlyTreasury nonReentrant {
+        require(amount > 0, "amount=0");
+        require(address(this).balance >= amount, "insufficient balance");
         (bool ok, ) = payable(treasury).call{value: amount}("");
         require(ok, "withdraw failed");
         emit Withdrawn(treasury, amount);

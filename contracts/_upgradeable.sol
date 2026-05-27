@@ -8,13 +8,17 @@ abstract contract UUPSUpgradeable {
     bytes32 private constant IMPLEMENTATION_SLOT =
         0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;
 
+    event Upgraded(address indexed implementation);
+
     function upgradeTo(address newImplementation) external virtual {
         _authorizeUpgrade(newImplementation);
         _setImplementation(newImplementation);
+        emit Upgraded(newImplementation);
     }
 
     function _setImplementation(address newImpl) internal {
         require(newImpl != address(0), "bad impl");
+        require(newImpl.code.length > 0, "impl not contract");
         bytes32 slot = IMPLEMENTATION_SLOT;
         assembly {
             sstore(slot, newImpl)

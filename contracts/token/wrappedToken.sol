@@ -39,6 +39,15 @@ contract VotesWrapper {
         _;
     }
 
+    // --- Reentrancy guard ---
+    uint256 private _reentrancyStatus = 1;
+    modifier nonReentrant() {
+        require(_reentrancyStatus != 2, "reentrancy");
+        _reentrancyStatus = 2;
+        _;
+        _reentrancyStatus = 1;
+    }
+
     // --- Underlying ---
     IERC20Minimal public immutable underlying;
 
@@ -111,18 +120,17 @@ contract VotesWrapper {
 
     // --- Wrap/Unwrap ---
     /// @notice Deposit underlying tokens and mint wrapped governance tokens to `to`.
-    function depositFor(address to, uint256 amount) public returns (bool) {
+    function depositFor(address to, uint256 amount) public nonReentrant returns (bool) {
         require(to != address(0), "wrap: to zero");
         require(amount > 0, "wrap: zero amount");
-        // Effects
+        // Interactions first (pull pattern — safe because of reentrancy guard)
+        require(underlying.transferFrom(msg.sender, address(this), amount), "wrap: transferFrom failed");
+        // Effects after
         totalSupply += amount;
         balanceOf[to] += amount;
         emit Transfer(address(0), to, amount);
-        // Votes: total supply up, move voting power to delegate of receiver if any
         _writeTotalCheckpoint(_add, amount);
         _moveVotingPower(address(0), delegates[to], amount);
-        // Interactions last
-        require(underlying.transferFrom(msg.sender, address(this), amount), "wrap: transferFrom failed");
         return true;
     }
 
@@ -132,15 +140,14 @@ contract VotesWrapper {
     }
 
     /// @notice Withdraw underlying by burning wrapped tokens from caller.
-    function withdraw(uint256 amount) external returns (bool) {
+    function withdraw(uint256 amount) external nonReentrant returns (bool) {
         require(amount > 0, "unwrap: zero amount");
         uint256 bal = balanceOf[msg.sender];
         require(bal >= amount, "unwrap: balance too low");
-        // Effects
+        // Effects first
         unchecked { balanceOf[msg.sender] = bal - amount; }
         unchecked { totalSupply -= amount; }
         emit Transfer(msg.sender, address(0), amount);
-        // Votes: total supply down, move voting power away from caller's delegate
         _writeTotalCheckpoint(_subtract, amount);
         _moveVotingPower(delegates[msg.sender], address(0), amount);
         // Interactions last

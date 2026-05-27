@@ -17,10 +17,12 @@ function WizardInner() {
 
   useEffect(() => {
     const safe = searchParams.get('safe');
-    const heir = searchParams.get('heir');
-    
     if (safe) setSafeAddress(safe);
-    if (heir) setHeirSeedPhrase(heir);
+    // Read heir phrase from sessionStorage (never from URL params)
+    try {
+      const heir = sessionStorage.getItem('miras_heir_phrase');
+      if (heir) { setHeirSeedPhrase(heir); sessionStorage.removeItem('miras_heir_phrase'); }
+    } catch {}
   }, [searchParams]);
 
   const generateDocument = () => {

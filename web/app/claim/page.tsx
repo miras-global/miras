@@ -173,7 +173,6 @@ export default function ClaimPage() {
     const picked = shuffled.slice(0, Math.min(3, shuffled.length));
     // json parse inside the array
     const parsed: AttesterEntry[] = picked.map(l => JSON.parse(l));
-    console.log("[Attestors] picked =>", parsed);
 
     for (const att of parsed) {
       const pubKeyBytes = att.public_key;
@@ -199,18 +198,8 @@ export default function ClaimPage() {
           await txApprove.wait();
         }
 
-        console.log("Creating claim for attester", att);
-        console.log("Encrypted payload:", encrypted);
-        console.log("Fee:", fee);
-        console.log("Safe:", target);
-        console.log("Death cert hash:", deathCertHash);
-        console.log("Target:", target);
-        console.log("Attester:", att);
-        console.log("Encrypted Safe:", encryptedSafe);
-        console.log("Fee:", fee);
         const tx = await claims.createClaim(encryptedSafe, att.address, encrypted, fee);
         await tx.wait();
-        console.log("Claim created with tx hash", tx.hash);
         showAlert("success", "Claim initiated on-chain with tx hash: " + encryptedSafe + ". Record ID: " + tx.hash + " to track status.");
       }
 

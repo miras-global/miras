@@ -5,7 +5,7 @@ export const dynamic = "force-static";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAccount, useWalletClient, useSwitchChain } from 'wagmi';
 import { ethers } from "ethers";
-import { decryptString, encryptString, normalizeUncompressedPublicKeyHex } from "@/lib/crypto";
+import { encryptString, normalizeUncompressedPublicKeyHex } from "@/lib/crypto";
 import { CHAIN } from "@/lib/config";
 import { humanizeEthersError as sharedHumanizeEthersError, createEnsureNetwork, createGetEthersSigner, createEnsureAccounts } from "@/lib/launch/utils";
 
@@ -176,82 +176,6 @@ useEffect(() => {
 }, [creating]);
 
 
-async function slow_findAttestors() {
-  try {
-    if (!walletClient) throw new Error("Please connect your wallet from the header");
-    await ensureAccounts();
-    const signer = getEthersSigner();
-    const addr = ethers.utils.getAddress(CHAIN.attestersProxy);
-    const abi = [
-      "function pickAttesters(uint256 num) view returns (address[] memory)",
-    ];
-    const contract = new ethers.Contract(addr, new ethers.utils.Interface(abi), signer);
-    const picked: string[] = await contract.pickAttesters(3);
-    console.log("[Attesters] pickAttesters(3) =>", picked);
-    
-    // with given attesters
-    // find their public key by interacting wiht the AttesterRegistry contract
-    // use function getAttester(address wallet)
-    // publicKey is the second param
-    /*
-    function getAttester(address wallet)
-        external
-        view
-        returns (
-            address,
-            bytes memory,
-            string memory,
-            string memory,
-            uint64,
-            bool,
-            bool,
-            uint256, // totalFeesPaid
-            uint256, // lastFeePaid
-            uint64,  // lastPaidAt
-            uint256, // totalOverpaid
-            uint256  // lastOverpaid
-        )
-            */
-    const registryAddr = CHAIN.attestersProxy;
-    
-    const registryAbi = [
-      "function getAttester(address wallet) view returns (address, bytes memory, string memory, string memory, uint64, bool, bool, uint256, uint256, uint64, uint256, uint256)"
-    ];
-    const registryContract = new ethers.Contract(registryAddr, new ethers.utils.Interface(registryAbi), signer);
-    //const publicKeys: string[] = await Promise.all(picked.map((addr) => registryContract.getAttester(addr)));
-    const publicKeys = await Promise.all(picked.map((addr) => registryContract.getAttester(addr)));
-    // go thru publicKeys array and fetch the second params
-    // go thru publicKeys array and fetch the second params (bytes publicKey)
-    const publicKeysArray = publicKeys.map((pk) => pk[1]);
-    console.log("[Attesters] publicKeysArray =>", publicKeysArray);
-
-    // Encrypt the message with each public key using ECIES (secp256k1)
-    // 1) Convert bytes to hex
-    const pubHexRaw = publicKeysArray.map((pk) =>
-      typeof pk === "string" ? pk : ethers.utils.hexlify(pk)
-    );
-
-    const ciphertextsB64 = [];
-for (const h of pubHexRaw) {
-  try {
-    const u = normalizeUncompressedPublicKeyHex(ethers.utils.computePublicKey(h, false));
-    ciphertextsB64.push(encryptString(u, "emre"));
-  } catch (e) {
-    console.warn("Skipping invalid public key:", h, e);
-  }
-}
-console.log("[Attesters] ciphertexts (base64) =>", ciphertextsB64);
-    
-
-    console.log("[Attesters] publicKeys =>", publicKeys);
-
-    return picked;
-  } catch (e: any) {
-    console.error("findAttestors error:", e?.message || e);
-    return [] as string[];
-  }
-}
-
 type AttesterEntry = { public_key: string } & Record<string, any>;
 
 const findAttestors = useCallback(async (): Promise<AttesterEntry[]> => {
@@ -281,10 +205,9 @@ const findAttestors = useCallback(async (): Promise<AttesterEntry[]> => {
     const picked = shuffled.slice(0, Math.min(3, shuffled.length));
     // json parse inside the array
     const parsed: AttesterEntry[] = picked.map(l => JSON.parse(l));
-    console.log("[Attestors] picked =>", parsed);
 
-    console.log("[Attestors] heir private key =>", heir.priv);
-    console.log("[Attestors] protocol phrase =>", proto.phrase);
+
+    // Sensitive data — never log to console
     // Option A: strictly in-memory only; do not read from localStorage
     let protocolPhrase: string | null = proto.phrase ?? null;
     let heirPriv: string | null = heir.priv ?? null;
@@ -298,12 +221,10 @@ const findAttestors = useCallback(async (): Promise<AttesterEntry[]> => {
     const heirEncryptionPub = normalizeUncompressedPublicKeyHex(
       ethers.utils.computePublicKey(heirEncryptionPriv, false)
     );
-    console.log("[Attestors] Generated new heir encryption key pair");
-    console.log("[Attestors] Heir encryption priv =>", heirEncryptionPriv);
+    // Sensitive key pair generated — not logged
     
     // FIRST: Encrypt protocolPhrase with the NEW heir encryption public key
     const firstEncryption = encryptString(heirEncryptionPub, protocolPhrase);
-    console.log("[Attestors] First encryption (with heir key) =>", firstEncryption);
 
     const contactInfo = JSON.stringify({
       phone1,
@@ -312,7 +233,6 @@ const findAttestors = useCallback(async (): Promise<AttesterEntry[]> => {
       email2: email2 || "",
       governmentId: governmentId ? governmentId.name : ""
     });
-    console.log("[Attestors] contact info =>", contactInfo);
 
     // for each parsed item, encrypt the contact info with the public key
     const ciphertextsB64 = parsed.map(p => {
@@ -325,7 +245,6 @@ const findAttestors = useCallback(async (): Promise<AttesterEntry[]> => {
         return null;
       }
     }).filter(Boolean) as string[];
-    console.log("[Attestors] ciphertexts (base64) =>", ciphertextsB64);
 
     /*
         struct Row {
@@ -383,8 +302,6 @@ const encryptedProtocolPhrasesStrings = parsed.map(p => {
     return null;
   }
 }).filter(Boolean) as string[];
-console.log("[Safe] encryptedPhonesStrings =>", encryptedPhonesStrings);
-console.log("[Safe] encryptedProtocolPhrasesStrings (double encrypted) =>", encryptedProtocolPhrasesStrings);
 
 try {
   await ensureAccounts();
@@ -404,10 +321,8 @@ try {
     encryptedProtocolPhrasesStrings,
     { value: ethers.utils.parseEther("0.1") }
   );
-  console.log("[Safe] insert tx sent =>", tx.hash);
   showAlert("info", `Transaction sent. Waiting for confirmation…\nTx: ${tx.hash}`);
   const rcpt = await tx.wait();
-  console.log("[Safe] insert confirmed in block", rcpt.blockNumber);
   showAlert("success", `Safe entry created successfully!\n\nTx: ${tx.hash}\nBlock: ${rcpt.blockNumber}\n\n⚠️ IMPORTANT: Share this decryption key with your heir (keep it VERY safe!):\n${heirEncryptionPriv}\n\nYour heir will need this key to decrypt the protocol seed phrase.`);
 } catch (e: any) {
   console.error("[Safe] insert failed:", e?.message || e);
@@ -428,14 +343,6 @@ try {
   }
 }, [heir.priv, proto.phrase, safeAddress, ensureAccounts, ensureNetwork, phone1, phone2, email1, email2, governmentId, showAlert, getEthersSigner, humanizeEthersError]);
 
-// Expose to console
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    (window as any).findAttestors = findAttestors; // usage: findAttestors()
-    (window as any).encryptString = encryptString; // usage: findAttestors()
-    (window as any).decryptString = decryptString; // usage: findAttestors()
-  }
-}, [findAttestors]);
 
   // Test helper: autofill seed verification inputs using current indices
   const autofillSeedChecks = useCallback(function autofillSeedChecks(){
@@ -614,12 +521,6 @@ useEffect(() => {
     }
   }
 
-  // Expose console helpers
-  useEffect(() => {
-    (window as any).autofill = autofillSeedChecks; // usage: autofill()
-    (window as any).verifySeeds = onVerifySeeds; // usage: verifySeeds()
-    (window as any).createSafeWallet = createSafe; // usage: createSafeWallet()
-  }, [autofillSeedChecks, onVerifySeeds, createSafe]);
 
   
 
@@ -801,9 +702,10 @@ useEffect(() => {
                 Now that you&apos;ve set up your Safe and shared keys with attestors, create a document for your heirs explaining how to claim their inheritance.
               </p>
               <div className="d-flex gap-2 flex-wrap justify-content-center">
-                <a 
-                  href={`/crypto-will-wizard?safe=${encodeURIComponent(safeAddress)}&heir=${encodeURIComponent(heir.phrase || '')}`}
+                <a
+                  href={`/crypto-will-wizard?safe=${encodeURIComponent(safeAddress)}`}
                   className="btn btn-success"
+                  onClick={() => { if (heir.phrase) { try { sessionStorage.setItem('miras_heir_phrase', heir.phrase); } catch {} } }}
                 >
                   <i className="bi bi-magic me-2"></i>
                   Create with Wizard

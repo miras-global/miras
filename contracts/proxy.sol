@@ -25,6 +25,7 @@ contract ERC1967Proxy {
 
     function _setImplementation(address newImpl) private {
         require(newImpl != address(0), "bad impl");
+        require(newImpl.code.length > 0, "impl not contract");
         bytes32 slot = IMPLEMENTATION_SLOT;
         assembly {
             sstore(slot, newImpl)

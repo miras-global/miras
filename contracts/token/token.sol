@@ -247,8 +247,8 @@ contract MRS {
         return true;
     }
 
-    // Internal transfer with basic checks
     function _transfer(address from, address to, uint256 value) internal {
+        require(from != address(0), "ERC20: transfer from zero");
         require(to != address(0), "ERC20: transfer to zero");
         uint256 bal = balanceOf[from];
         require(bal >= value, "ERC20: balance too low");

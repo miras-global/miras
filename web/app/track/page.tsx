@@ -86,18 +86,11 @@ export default function TrackPage() {
         : (hasEthereum() ? getBrowserProvider() : new ethers.providers.StaticJsonRpcProvider(CHAIN.rpc, { chainId: CHAIN.id, name: CHAIN.name }));
       
       const network = await provider.getNetwork();
-      console.log('Detected network:', network);
-      console.log('Expected network:', CHAIN);
-      
       if (network.chainId !== CHAIN.id) {
         throw new Error(`Wrong network! Connected to chainId ${network.chainId} but expected ${CHAIN.id} (${CHAIN.name}). Please switch your wallet to ${CHAIN.name}.`);
       }
       
       const contract = new ethers.Contract(contractAddress, CLAIMS_DB_ABI as any, provider);
-      
-      console.log('Calling getClaimsByAttester with attestor:', attestor);
-      console.log('Contract address:', contractAddress);
-      console.log('Provider:', provider);
       
       const [outIds, claimers, encryptedSafes, attestors, encryptedPhones, createdAts, statuses] = await (contract as any).getClaimsByAttester(attestor);
 
@@ -105,15 +98,10 @@ export default function TrackPage() {
       for (let i = 0; i < outIds.length; i++) {
         const id = Number(outIds[i]);
         let safeDecrypted = "";
-        try { 
-          console.log(`Decrypting claim ${id}, encrypted safe:`, encryptedSafes[i]);
-          console.log(`Private key:`, priv);
-          safeDecrypted = decryptString(priv, encryptedSafes[i]); 
-          console.log(`Successfully decrypted claim ${id}:`, safeDecrypted);
+        try {
+          safeDecrypted = decryptString(priv, encryptedSafes[i]);
         } catch (e) {
-          console.error(`Failed to decrypt claim ${id}:`, e);
-          console.error(`Encrypted data:`, encryptedSafes[i]);
-          console.error(`Private key length:`, priv.length);
+          // Decryption failed — show placeholder
         }
         rows.push({
           id,

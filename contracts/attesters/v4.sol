@@ -55,6 +55,7 @@ contract AttestersV4 is UUPSUpgradeable {
     event RegisterFeeUpdated(uint256 oldFee, uint256 newFee);
     event AdminTransferStarted(address indexed currentAdmin, address indexed pendingAdmin);
     event AdminTransferred(address indexed oldAdmin, address indexed newAdmin);
+    event ResignationWaitUpdated(uint64 oldWaitSeconds, uint64 newWaitSeconds, uint64 oldWaitBlocks, uint64 newWaitBlocks);
 
     uint256 private _locked; // 0 = unlocked, 1 = locked
     modifier nonReentrant() {
@@ -129,7 +130,8 @@ contract AttestersV4 is UUPSUpgradeable {
         uint64 ready = 0;
         if (reqAt > 0) {
             if (_resignWaitBlocks > 0) {
-                ready = reqAt + _resignWaitSeconds;
+                uint64 reqBlock = _resignRequestedAtBlock[wallet];
+                ready = reqBlock + _resignWaitBlocks;
             } else {
                 ready = reqAt + _resignWaitSeconds;
             }
@@ -158,6 +160,7 @@ contract AttestersV4 is UUPSUpgradeable {
     }
 
     function setResignationWait(uint64 waitSeconds, uint64 waitBlocks) external onlyAdmin {
+        emit ResignationWaitUpdated(_resignWaitSeconds, waitSeconds, _resignWaitBlocks, waitBlocks);
         _resignWaitSeconds = waitSeconds;
         _resignWaitBlocks = waitBlocks;
     }
@@ -247,6 +250,10 @@ contract AttestersV4 is UUPSUpgradeable {
         require(a.exists, "not found");
         a.exists = false;
         a.updatedAt = uint64(block.timestamp);
+        if (_refundableDeposit[msg.sender] > 0 && _resignRequestedAt[msg.sender] == 0) {
+            _resignRequestedAt[msg.sender] = uint64(block.timestamp);
+            _resignRequestedAtBlock[msg.sender] = uint64(block.number);
+        }
         emit AttesterDeleted(msg.sender, a.exists);
     }
 
@@ -471,4 +478,6 @@ contract AttestersV4 is UUPSUpgradeable {
     function _isSlashed(address wallet) internal view returns (bool) {
         return attesters[wallet].isSlashed;
     }
+
+    uint256[50] private __gap;
 }

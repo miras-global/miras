@@ -40,6 +40,7 @@ export function getAllPostsMeta(): PostMeta[] {
 }
 
 export function getPostMeta(slug: string): PostMeta | null {
+  if (!/^[a-zA-Z0-9_-]+$/.test(slug)) return null;
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   if (!fs.existsSync(fullPath)) return null;
   const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -55,12 +56,13 @@ export function getPostMeta(slug: string): PostMeta | null {
 }
 
 export async function getPost(slug: string): Promise<Post | null> {
+  if (!/^[a-zA-Z0-9_-]+$/.test(slug)) return null;
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   if (!fs.existsSync(fullPath)) return null;
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { content, data } = matter(fileContents);
 
-  const processedContent = await remark().use(html).process(content);
+  const processedContent = await remark().use(html, { sanitize: true }).process(content);
   const contentHtml = processedContent.toString();
 
   const post: Post = {

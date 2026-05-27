@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useAccount, useWalletClient } from 'wagmi';
 import { ethers } from "ethers";
-import { encryptString as encStr, decryptString as decStr } from '@/lib/crypto';
 import { getBoundSigner, ensureAccountsOn } from '@/lib/wallet';
 import { CHAIN } from "@/lib/config";
 
@@ -81,22 +80,6 @@ export default function RegisterPage(){
     setLoaded(true);
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      (window as any).encryptString = encStr;
-      (window as any).decryptString = decStr;
-      (window as any).mirasCrypto = { encryptString: encStr, decryptString: decStr };
-    }
-    return () => {
-      if (typeof window !== "undefined") {
-        try {
-          delete (window as any).encryptString;
-          delete (window as any).decryptString;
-          delete (window as any).mirasCrypto;
-        } catch {}
-      }
-    };
-  }, []);
 
   function canSave(){
     const nameOk = profile.name.trim().length > 0;
@@ -353,9 +336,17 @@ export default function RegisterPage(){
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Private Key</label>
-                  <textarea className="form-control" rows={2} readOnly placeholder="Click Save Profile to generate"
-                    value={keys?.priv || ""}
-                  />
+                  <div className="input-group">
+                    <input type="password" className="form-control" readOnly placeholder="Click Save Profile to generate"
+                      value={keys?.priv || ""}
+                    />
+                    {keys?.priv && (
+                      <button className="btn btn-outline-secondary" type="button" onClick={async () => { try { await navigator.clipboard.writeText(keys.priv); alert('Private key copied to clipboard.'); } catch { alert('Copy failed.'); } }}>
+                        <i className="bi bi-clipboard"></i> Copy
+                      </button>
+                    )}
+                  </div>
+                  <div className="form-text">Hidden for security. Use the Copy button or download the keystore.</div>
                 </div>
                 <div className="d-flex flex-wrap gap-2 mt-2">
                   <button className="btn btn-outline-primary" disabled={!keystoreJson} onClick={onDownloadKeystore}><i className="bi bi-download"></i> Download Keystore (JSON)</button>

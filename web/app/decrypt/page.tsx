@@ -15,24 +15,6 @@ export default function DecryptPage() {
   const [cipher, setCipher] = useState<string>("");
   const [plain, setPlain] = useState<string>("");
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      (window as any).encryptString = encStr;
-      (window as any).decryptString = decStr;
-      (window as any).mirasCrypto = { encryptString: encStr, decryptString: decStr };
-      (window as any).derivePubFromPriv = (priv: string) => new ethers.Wallet(priv)._signingKey().publicKey;
-    }
-    return () => {
-      if (typeof window !== "undefined") {
-        try {
-          delete (window as any).encryptString;
-          delete (window as any).decryptString;
-          delete (window as any).mirasCrypto;
-          delete (window as any).derivePubFromPriv;
-        } catch {}
-      }
-    };
-  }, []);
 
   async function onPickFile() {
     if (!fileRef.current) return;
@@ -63,11 +45,6 @@ export default function DecryptPage() {
       setAddr(address);
       setStatus("Decrypted successfully");
 
-      if (typeof window !== "undefined") {
-        (window as any).mirasTest = { priv: privHex, pub: pubHex, addr: address };
-        console.log("mirasTest available on window:", (window as any).mirasTest);
-        console.log("mirasCrypto available on window:", (window as any).mirasCrypto);
-      }
     } catch (err: any) {
       console.error(err);
       setStatus(err?.message || "Error decrypting keystore");
@@ -81,10 +58,6 @@ export default function DecryptPage() {
       const w = new ethers.Wallet(input);
       const p = w._signingKey().publicKey; // 0x04...
       setDerivePub(p);
-      if (typeof window !== "undefined") {
-        (window as any).mirasDerived = { priv: input, pub: p };
-        console.log("mirasDerived available on window:", (window as any).mirasDerived);
-      }
     } catch (e: any) {
       setDerivePub(`Error: ${e?.message || String(e)}`);
     }

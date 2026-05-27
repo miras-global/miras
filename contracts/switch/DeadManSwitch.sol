@@ -148,6 +148,7 @@ contract DeadMansSwitch {
      */
     function setHeir(address newHeir) external onlyOwner {
         if (newHeir == address(0)) revert ZeroAddress();
+        require(newHeir != owner, "heir cannot be owner");
         address oldHeir = heir;
         heir = newHeir;
         emit HeirChanged(oldHeir, newHeir);

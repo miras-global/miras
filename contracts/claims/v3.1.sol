@@ -317,4 +317,6 @@ function getClaimsByAttester(address _attestor)
         }
         require(received > 0, "nothing received");
     }
+
+    uint256[50] private __gap;
 }

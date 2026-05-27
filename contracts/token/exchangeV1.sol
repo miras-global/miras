@@ -146,8 +146,11 @@ contract ExchangeV1 is UUPSUpgradeable {
     // --------- Internal math ---------
 
     /// @dev price: 10 tokens (10**decimals each) == 1 ETH
-    function _weiForTokenAmount(uint256 tokenAmount) internal view returns (uint256) {
+    function _weiForTokenAmount(uint256 tokenAmount) internal view returns (uint256 weiAmount) {
         // wei = tokenAmount * 1e18 / (10 * 10**tokenDecimals)
-        return ((tokenAmount * 1 ether) / (10 ** tokenDecimals)) / 10;
+        weiAmount = ((tokenAmount * 1 ether) / (10 ** tokenDecimals)) / 10;
+        require(weiAmount > 0, "amount too small");
     }
+
+    uint256[50] private __gap;
 }
