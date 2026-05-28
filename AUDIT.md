@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-28
 **Branch:** `security_audit`
-**Scope:** All Solidity smart contracts (13 files) and Next.js web application (22 source files)
+**Scope:** All Solidity smart contracts (13 files), Next.js web application (22 source files), and EthMultiSig external contract
 **Commit:** `3a08dbc`
 
 ---
@@ -531,3 +531,101 @@ Entire dead function removed.
 12. Consider restricting `SafeTableV6.insert` to prevent front-running of safe address registration
 13. Add a separate `ownerWithdrawAll()` to DeadMansSwitch to avoid the `amount=0` footgun
 14. Remove unused dependencies (`web3.storage`, `postgres` if unused)
+
+---
+
+## EthMultiSig External Contract Audit
+
+**Source:** [`esokullu/ethmultisig` on GitHub](https://github.com/esokullu/ethmultisig/blob/main/EthMultiSig.sol)
+**Website:** [ethmultisig.org](https://ethmultisig.org/)
+**Lines:** ~150 (Solidity ^0.8.20)
+
+### Overview
+
+A minimal, zero-dependency Ethereum multisig wallet. No imports, no proxies, no delegatecall, no modules. Owners propose transactions, other owners confirm, and once the threshold is met any owner can execute.
+
+### Verdict: PASS
+
+No CRITICAL or HIGH findings. The contract is well-designed for its stated purpose.
+
+### Architecture
+
+- **Immutable owner set and threshold** — set once in the constructor, never changeable
+- **Transaction lifecycle:** submit → confirm (by N owners) → execute
+- **Auto-confirm on submit** — the proposer is automatically counted as a confirmer
+- **Revocation** — owners can revoke their confirmation before execution
+- **CEI pattern in `execute`** — `t.executed = true` is set before the external `.call`, preventing re-execution of the same txId via reentrancy
+
+### Detailed Findings
+
+#### LOW-1. No reentrancy guard on `execute`
+
+**File:** `EthMultiSig.sol` — `execute` function
+
+The `execute` function sets `t.executed = true` before the external call, which prevents re-execution of the same transaction. However, a malicious call target could re-enter `submit`, `confirm`, or `execute` for a *different* transaction. This is technically safe (each transaction is independent), but a `nonReentrant` modifier would add defense-in-depth.
+
+**Risk:** Minimal — the CEI pattern is correctly applied and cross-transaction reentrancy has no exploit path.
+
+---
+
+#### LOW-2. No owner management post-deployment
+
+**File:** `EthMultiSig.sol` — constructor
+
+Owners and threshold are fixed at deployment. If an owner's key is compromised, the only recourse is deploying a new multisig and migrating funds. This is by design (simplicity), but users should be aware.
+
+**Mitigation:** Document this limitation. For high-value wallets, consider deploying with a higher threshold so a single compromised key cannot reach quorum.
+
+---
+
+#### LOW-3. `submit` allows `to == address(0)`
+
+**File:** `EthMultiSig.sol` — `submit` function
+
+No check preventing proposals targeting the zero address. Executing such a transaction with value would burn ETH irreversibly.
+
+**Mitigation:** Consider adding `require(to != address(0), "zero to")` unless there is a deliberate reason to allow precompile calls.
+
+---
+
+#### INFORMATIONAL-1. `transactions` array grows unboundedly
+
+Executed and stale transactions remain in the array forever. The `txCount()` return value grows monotonically. Not a gas issue (no loops over all transactions), but a storage cost concern over the lifetime of the contract.
+
+---
+
+#### INFORMATIONAL-2. No timelock between confirmation and execution
+
+Once confirmations reach the threshold, any owner can execute immediately in the same block. This is standard for on-chain multisigs but means there is no cool-down period for owners to reconsider.
+
+---
+
+#### INFORMATIONAL-3. `_revertReason` assembly pattern
+
+The `assembly { ret := add(ret, 0x04) }` pattern strips the 4-byte `Error(string)` selector before calling `abi.decode`. This is a well-established pattern (used by Gnosis Safe and others). If return data is not a standard `Error(string)`, the decode may revert or produce unexpected output, but this is handled gracefully since the overall transaction reverts anyway on a failed call.
+
+---
+
+#### INFORMATIONAL-4. No `fallback()` function
+
+Only `receive()` is defined. ETH sent with non-empty calldata that doesn't match a function selector will revert. This is acceptable — the wallet is interacted with via its explicit API.
+
+---
+
+#### INFORMATIONAL-5. No ERC-1271 signature support
+
+The contract cannot validate off-chain signatures as a "smart contract wallet" (ERC-1271). This means it cannot be used with protocols that require signature verification from the wallet itself. Out of scope for a minimal multisig.
+
+---
+
+### Summary
+
+| Severity | Count |
+|---|---|
+| CRITICAL | 0 |
+| HIGH | 0 |
+| MEDIUM | 0 |
+| LOW | 3 |
+| INFORMATIONAL | 5 |
+
+The contract is clean, minimal, and correctly implements the multisig pattern. The simplicity itself is a security feature — the entire contract can be audited in one sitting. Recommended as a lightweight alternative to Safe for users who want a zero-dependency, fully transparent multisig.

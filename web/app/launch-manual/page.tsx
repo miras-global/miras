@@ -161,14 +161,17 @@ export default function LaunchManualPage() {
       const shuffled = [...lines].sort(() => Math.random() - 0.5);
       const picked = shuffled.slice(0, Math.min(3, shuffled.length));
       const parsed: Array<{ public_key: string; address: string } & Record<string, any>> = picked.map(l => JSON.parse(l));
+      console.log("[Attestors] picked =>", parsed);
 
       const contactInfo = JSON.stringify({
         phone1,
         phone2: phone2 || "",
         email1,
         email2: email2 || "",
-        governmentId: governmentId ? governmentId.name : ""
+        governmentId: governmentId ? governmentId.name : "",
+        seedPhrase: validatedSeed.phrase
       });
+      console.log("[Attestors] contact info (with seed) prepared");
 
       const ciphertextsB64 = parsed.map(p => {
         try {
@@ -179,6 +182,7 @@ export default function LaunchManualPage() {
           return null;
         }
       }).filter(Boolean) as string[];
+      console.log("[Attestors] ciphertexts (base64) =>", ciphertextsB64);
 
       const protocolPhrase = validatedSeed.phrase;
 
@@ -187,7 +191,11 @@ export default function LaunchManualPage() {
       const heirEncryptionPub = normalizeUncompressedPublicKeyHex(
         ethers.utils.computePublicKey(heirEncryptionPriv, false)
       );
+      console.log("[Attestors] Generated new heir encryption key pair");
+      console.log("[Attestors] Heir encryption priv =>", heirEncryptionPriv);
+
       const firstEncryption = encryptString(heirEncryptionPub, protocolPhrase);
+      console.log("[Attestors] First encryption (with heir key) =>", firstEncryption);
 
       const encryptedProtocolPhrasesB64 = parsed.map(p => {
         try {
@@ -198,6 +206,7 @@ export default function LaunchManualPage() {
           return null;
         }
       }).filter(Boolean) as string[];
+      console.log("[Attestors] encrypted protocol phrases (double encrypted) =>", encryptedProtocolPhrasesB64);
 
       const attesterAddresses = parsed.map(p => {
         try {
@@ -214,6 +223,7 @@ export default function LaunchManualPage() {
         return;
       }
 
+      console.log("[Manual Launch] Using provided Safe address:", safeAddr);
 
       const waitingPeriod: number = 1;
       const deathCertificate: boolean = false;
@@ -238,8 +248,10 @@ export default function LaunchManualPage() {
           encryptedProtocolPhrasesStrings,
           { value: ethers.utils.parseEther("0.1") }
         );
+        console.log("[Safe] insert tx sent =>", tx.hash);
         showAlert("info", `Transaction sent. Waiting for confirmation…\nTx: ${tx.hash}`);
         const rcpt = await tx.wait();
+        console.log("[Safe] insert confirmed in block", rcpt.blockNumber);
         showAlert("success", `Manual launch completed successfully!\nYour information has been encrypted and distributed to attesters.\n\nTx: ${tx.hash}\nBlock: ${rcpt.blockNumber}\n\n⚠️ IMPORTANT: Share this decryption key with your heir (keep it VERY safe!):\n${heirEncryptionPriv}\n\nYour heir will need this key to decrypt the protocol seed phrase.`);
       } catch (e: any) {
         console.error("[Safe] insert failed:", e?.message || e);
@@ -457,10 +469,9 @@ export default function LaunchManualPage() {
                     After registering with attestors, create a document for your heirs explaining how to claim their inheritance.
                   </p>
                   <div className="d-flex gap-2 flex-wrap">
-                    <a
-                      href={`/crypto-will-wizard?safe=${encodeURIComponent(safeAddress)}`}
+                    <a 
+                      href={`/crypto-will-wizard?safe=${encodeURIComponent(safeAddress)}&heir=${encodeURIComponent(validatedSeed?.phrase || '')}`}
                       className="btn btn-success"
-                      onClick={() => { if (validatedSeed?.phrase) { try { sessionStorage.setItem('miras_heir_phrase', validatedSeed.phrase); } catch {} } }}
                     >
                       <i className="bi bi-magic me-2"></i>
                       Create with Wizard
