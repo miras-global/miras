@@ -17,7 +17,7 @@ export default function Header() {
           <span className="fw-bold d-flex align-items-center gap-2">
 
           <i className="bi bi-piggy-bank fs-1 me-2" />
-            <span className="fw-bold">miras.global</span>
+            <span className="fw-bold">Miras Protocol</span>
             <sup>β</sup>
           </span>
           </Link>

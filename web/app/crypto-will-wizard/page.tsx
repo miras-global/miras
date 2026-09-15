@@ -52,7 +52,7 @@ If you'd rather have help, work with someone you trust and stay by their side th
 
 ## 2. Claiming my assets after I'm gone
 
-1. **Visit the claim portal** – \`https://miras.global/claim\`
+1. **Visit the claim portal** – \`https://mirasprotocol.com/claim\`
 2. **Fill in your contact details** (name, email, phone).  
    *The service needs this to verify you are an authorized claimant.*
 3. Click "Submit" and wait for a confirmation e‑mail.
@@ -65,7 +65,7 @@ If you'd rather have help, work with someone you trust and stay by their side th
 
 Once your claim is approved, you will receive an *encrypted* file (or email) that contains the second part of the key needed for the Safe. To decrypt it:
 
-1. Go to \`https://miras.global/decrypt\`
+1. Go to \`https://mirasprotocol.com/decrypt\`
 2. Paste the following **decryption passphrase** into the box and press "Decrypt":
 
    \`${encryptedPassphrase || '0x[ENCRYPTION_KEY]'}\`
@@ -115,7 +115,7 @@ ${yourName || '[Your Name]'}
 
 ---
 
-*For more information about setting up your Miras inheritance plan, visit [miras.global](https://miras.global) or contact us at [team@miras.global](mailto:team@miras.global).*`;
+*For more information about setting up your Miras inheritance plan, visit [Miras Protocol](https://mirasprotocol.com) or contact us at [team@mirasprotocol.com](mailto:team@mirasprotocol.com).*`;
 
     setGeneratedDocument(doc);
   };

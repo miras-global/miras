@@ -88,7 +88,7 @@ When you use Manual Launch, the system:
 
 #### Step 1: Navigate to Manual Launch
 
-Visit [https://miras.global/launch-manual](https://miras.global/launch-manual) and connect your wallet.
+Visit [https://mirasprotocol.com/launch-manual](https://mirasprotocol.com/launch-manual) and connect your wallet.
 
 #### Step 2: Enter Your Seed Phrase
 
@@ -190,13 +190,13 @@ For detailed instructions on creating your Crypto Will, see our guide: [You've C
 
 **Updating Miras Registration:**
 - If you change your Safe configuration significantly, you may need to update your Miras registration
-- Contact the Miras team at [team@miras.global](mailto:team@miras.global) for guidance
+- Contact the Miras team at [team@mirasprotocol.com](mailto:team@mirasprotocol.com) for guidance
 
 ## What Happens When Your Heir Needs to Claim?
 
 When the time comes, your heir will:
 
-1. Visit [https://miras.global/claim](https://miras.global/claim)
+1. Visit [https://mirasprotocol.com/claim](https://mirasprotocol.com/claim)
 2. Submit a claim with their contact information
 3. Wait for attesters to verify the claim (typically 3 months)
 4. Receive the encrypted protocol seed phrase from attesters
@@ -246,7 +246,7 @@ Your crypto inheritance plan is only complete when your heirs can actually acces
 5. Submit, get 2 confirmations, then execute
 
 **Registering with Miras:**
-1. Visit [miras.global/launch-manual](https://miras.global/launch-manual)
+1. Visit [mirasprotocol.com/launch-manual](https://mirasprotocol.com/launch-manual)
 2. Validate your seed phrase
 3. Enter Safe address and contact info
 4. Click "Find Attestors & Register"
@@ -260,4 +260,4 @@ Your Safe is now **4 owners / 2 required signatures** with **trustless inheritan
 
 ---
 
-*For more information about Miras inheritance protocol, visit [miras.global](https://miras.global) or contact us at [team@miras.global](mailto:team@miras.global).*
+*For more information about Miras inheritance protocol, visit [Miras Protocol](https://mirasprotocol.com) or contact us at [team@mirasprotocol.com](mailto:team@mirasprotocol.com).*

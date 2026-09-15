@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "on-chain will",
     "inheritance protocol"
   ],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://miras.global"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mirasprotocol.com"),
   alternates: {
     canonical: "/",
   },

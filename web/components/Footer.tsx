@@ -9,7 +9,7 @@ export default function Footer(){
       <div className="container">
         <div className="d-flex flex-column align-items-center gap-3">
           <div className="d-flex flex-wrap justify-content-center align-items-center gap-2 gap-md-3">
-            <Link href="https://miras.global" className={linkCls}>miras.global</Link>
+            <Link href="https://mirasprotocol.com" className={linkCls}>mirasprotocol.com</Link>
             <span className="footer-dot" aria-hidden>•</span>
             <Link href="https://app.aragon.org/dao/ethereum-mainnet/mrs.dao.eth" target="_blank" className={linkCls}>DAO</Link>
             <span className="footer-dot" aria-hidden>•</span>
@@ -23,12 +23,13 @@ export default function Footer(){
             <span className="footer-dot" aria-hidden>•</span>
             <Link href="/tos" className={linkCls}>TOS</Link>
             <span className="footer-dot" aria-hidden>•</span>
+            {/* TODO: repoint to /org/mirasprotocol.com once the pressreleases.online org is re-registered under the new name (new slug currently 404s) */}
             <Link href="https://pressreleases.online/org/miras.global" target="_blank" className={linkCls}>Press Releases</Link>
             <span className="footer-dot" aria-hidden>•</span>
             <Link href="https://github.com/miras-global/miras" className={linkCls}>Source</Link>
           </div>
           <div className="footer-meta">
-            © {year} miras.global · Patent Pending 63/914,518
+            © {year} Miras Protocol · Patent Pending 63/914,518
           </div>
         </div>
       </div>

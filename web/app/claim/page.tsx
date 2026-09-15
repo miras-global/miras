@@ -5,7 +5,7 @@ import { useAccount, useWalletClient } from 'wagmi';
 import { ethers } from "ethers";
 import { getBoundSigner, getBoundProvider, ensureAccountsOn } from "@/lib/wallet";
 import { encryptString, encryptToBytes, normalizeUncompressedPublicKeyHex } from "@/lib/crypto";
-import { CHAIN, NETWORK_CONFIGS } from "@/lib/config";
+import { API_BASE_URL, CHAIN, NETWORK_CONFIGS } from "@/lib/config";
 
 const LS_KEYS = { reg: "miras_registry_address" } as const;
 const ZERO32 = "0x" + "0".repeat(64);
@@ -153,7 +153,7 @@ export default function ClaimPage() {
 
 
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.miras.global";
+    const apiUrl = API_BASE_URL;
     const res = await fetch(`${apiUrl}/index.php?module=attesters&chain=${CHAIN.keyName}`, { cache: "no-store" });
     if (!res.ok) throw new Error(`Failed to fetch attesters.txt: ${res.status}`);
     const text = await res.text();
@@ -207,7 +207,7 @@ export default function ClaimPage() {
       // Gasless variant: fetch attesters from API (like Launch page) and encrypt payload for each
       type AttesterEntry = { public_key: string } & Record<string, any>;
       const chainKey = chainId === 1 ? "mainnet" : "testnet";
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.miras.global";
+      const apiUrl = API_BASE_URL;
       const res = await fetch(`${apiUrl}/attesters.php?chain=${chainKey}`, { cache: "no-store" });
       if (!res.ok) throw new Error(`Failed to fetch attesters: ${res.status}`);
       const text = await res.text();

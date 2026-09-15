@@ -19,6 +19,7 @@ pnpm-debug.log*
 # Next.js misc
 .next
 out
+*.tsbuildinfo
 
 # Tooling caches
 .vercel

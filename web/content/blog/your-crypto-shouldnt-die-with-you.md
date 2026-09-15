@@ -41,7 +41,7 @@ This isn't a technical whitepaper (we have [one of those too](/whitepapers/1.3/m
 
 If you still have access to your wallets, the guide recommends five concrete actions:
 
-1. Set up a Miras inheritance plan at [miras.global](https://miras.global) so your assets have a trustless path to your chosen heirs
+1. Set up a Miras inheritance plan at [Miras Protocol](https://mirasprotocol.com) so your assets have a trustless path to your chosen heirs
 2. Create durable physical backups of your seed phrase and store copies in at least three separate locations
 3. Move significant holdings to a hardware wallet purchased directly from the manufacturer
 4. Enable hardware-key 2FA and use a password manager for every crypto-related account

@@ -73,7 +73,7 @@ export default function HomePage(){
           {/* Footer line */}
           <div className="mt-5 footer-line"></div>
           <div className="py-3 small text-white-50 d-flex flex-wrap gap-3">
-            <span>© {year} miras.global </span>
+            <span>© {year} Miras Protocol </span>
 <span className="ms-auto">{TESTNET_ONLY ? 'Non‑custodial • Self‑sovereign' : 'Security‑audited • Non‑custodial • Self‑sovereign'}</span>
           </div>
         </div>

@@ -51,7 +51,7 @@ If you'd rather have help, work with someone you trust and stay by their side th
 
 ### 2. Claiming my assets after I'm gone
 
-1. **Visit the claim portal** – `https://miras.global/claim`
+1. **Visit the claim portal** – `https://mirasprotocol.com/claim`
 2. **Fill in your contact details** (name, email, phone).  
    *The service needs this to verify you are an authorized claimant.*
 3. Click "Submit" and wait for a confirmation e‑mail.
@@ -189,4 +189,4 @@ Your crypto inheritance plan is only complete when your heirs can actually acces
 
 ---
 
-*For more information about setting up your Miras inheritance plan, visit [miras.global](https://miras.global) or contact us at [team@miras.global](mailto:team@miras.global).*
+*For more information about setting up your Miras inheritance plan, visit [Miras Protocol](https://mirasprotocol.com) or contact us at [team@mirasprotocol.com](mailto:team@mirasprotocol.com).*

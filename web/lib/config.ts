@@ -56,6 +56,12 @@ const MAINNET_CONFIG: NetworkConfig = {
 
 export const CHAIN = IS_MAINNET ? MAINNET_CONFIG : SEPOLIA_CONFIG;
 
+/**
+ * Base URL of the Miras API (attesters, claims).
+ * Override at build time with NEXT_PUBLIC_API_URL.
+ */
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.mirasprotocol.com";
+
 export const NETWORK_CONFIGS = {
   sepolia: SEPOLIA_CONFIG,
   mainnet: MAINNET_CONFIG,

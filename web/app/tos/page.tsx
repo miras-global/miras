@@ -165,7 +165,7 @@ export default function TermsOfServicePage() {
           <h2 className="mt-4">15. Contact</h2>
           <p>
             Questions about these Terms may be directed to the Miras support team at
-            <a href="mailto:legal@miras.global" className="ms-1">legal@miras.global</a>.
+            <a href="mailto:legal@mirasprotocol.com" className="ms-1">legal@mirasprotocol.com</a>.
           </p>
         </div>
       </div>

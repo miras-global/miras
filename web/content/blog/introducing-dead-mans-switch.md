@@ -1,13 +1,13 @@
 ---
 title: Introducing Dead Man’s Switch for Trustless Crypto Inheritance
 date: 2026-01-16
-description: Learn how Miras.Global’s Dead Man’s Switch enables trustless, on-chain crypto inheritance using Safe multisig wallets and inactivity-based triggers.
+description: Learn how Miras Protocol’s Dead Man’s Switch enables trustless, on-chain crypto inheritance using Safe multisig wallets and inactivity-based triggers.
 ---
 
 As crypto adoption grows, a critical question becomes unavoidable: **what happens to your digital assets if you are no longer around?**  
 Unlike traditional finance, there is no bank, no recovery desk, and no court order that can magically restore access to a lost private key.
 
-To address this, Miras.Global now introduces **Dead Man’s Switch** — a trustless, on-chain inheritance mechanism designed specifically for self-custodial crypto users.
+To address this, Miras Protocol now introduces **Dead Man’s Switch** — a trustless, on-chain inheritance mechanism designed specifically for self-custodial crypto users.
 
 ## What Is a Dead Man’s Switch?
 
@@ -32,9 +32,9 @@ This creates a fundamental inheritance problem:
 
 Dead Man’s Switch solves this by combining **cryptographic guarantees** with **time-based conditions**, enforced on-chain.
 
-## How Dead Man’s Switch Works on Miras.Global
+## How Dead Man’s Switch Works on Miras Protocol
 
-Miras.Global builds Dead Man’s Switch on top of multisig Safe wallets.
+Miras Protocol builds Dead Man’s Switch on top of multisig Safe wallets.
 
 The general flow is:
 
@@ -49,7 +49,7 @@ The general flow is:
    - Any approved “proof of life” interaction resets the timer
 
 3. **Encrypted escrow**
-   - Miras.Global never holds plaintext private keys
+   - Miras Protocol never holds plaintext private keys
    - Escrowed data is encrypted and useless on its own
 
 4. **Trigger and claim**
@@ -61,7 +61,7 @@ At no point can the protocol act unilaterally or bypass Safe’s security model.
 
 ## What Makes This Trustless
 
-Dead Man’s Switch on Miras.Global is:
+Dead Man’s Switch on Miras Protocol is:
 
 - **Non-custodial**  
   No single party ever holds enough information to move funds.
@@ -99,9 +99,9 @@ Crypto inheritance should be intentional, not accidental.
 
 ## Get Started
 
-Dead Man’s Switch is now available as part of the Miras.Global onboarding flow.
+Dead Man’s Switch is now available as part of the Miras Protocol onboarding flow.
 
 If you already use Safe and care about self-custody beyond your own lifetime, this feature allows your assets to outlive you — **without trusting anyone while you’re alive.**
 
 Get started at:  
-https://miras.global/get-started
+https://mirasprotocol.com/get-started

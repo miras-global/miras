@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://miras.global";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://mirasprotocol.com";
   const routes = ["/", "/learn-more", "/claim"];
   const now = new Date();
 

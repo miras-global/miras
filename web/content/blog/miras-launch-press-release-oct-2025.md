@@ -43,8 +43,8 @@ Miras is a trustless inheritance protocol built on Ethereum. We leverage encrypt
 
 Our ecosystem includes SafeTable, AttesterRegistry, and ClaimsDB — all designed to give you peace of mind.
 
-- Website: [https://miras.global](https://miras.global)
-- Contact: [team@miras.global](mailto:team@miras.global)
+- Website: [https://mirasprotocol.com](https://mirasprotocol.com)
+- Contact: [team@mirasprotocol.com](mailto:team@mirasprotocol.com)
 - X (Twitter): [@MirasGlobal](https://twitter.com/MirasGlobal)
 
 **Death Happens. Be Ready.**

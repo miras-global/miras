@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAccount, useWalletClient, useSwitchChain } from 'wagmi';
 import { ethers } from "ethers";
 import { encryptString, normalizeUncompressedPublicKeyHex } from "@/lib/crypto";
-import { CHAIN } from "@/lib/config";
+import { API_BASE_URL, CHAIN } from "@/lib/config";
 import { humanizeEthersError as sharedHumanizeEthersError, createEnsureNetwork, createGetEthersSigner, createEnsureAccounts } from "@/lib/launch/utils";
 
 // Hoisted constants
@@ -185,7 +185,7 @@ const findAttestors = useCallback(async (): Promise<AttesterEntry[]> => {
       return [] as AttesterEntry[];
     }
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.miras.global";
+    const apiUrl = API_BASE_URL;
     const res = await fetch(`${apiUrl}/index.php?module=attesters&chain=${CHAIN.keyName}`, { cache: "no-store" });
     if (!res.ok) throw new Error(`Failed to fetch attesters.txt: ${res.status}`);
     const text = await res.text();
